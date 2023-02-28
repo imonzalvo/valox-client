@@ -8,7 +8,7 @@ import {
 import tw from "twin.macro";
 import { config } from "../lib/react-query-config";
 import GlobalStyles from "./../styles/GlobalStyles";
-
+import Header from "@/components/header/Header";
 const GlobalContainer = tw.div`flex flex-1 justify-center md:w-full 
                                 sm:w-full lg:w-full px-8 bg-white`;
 
@@ -19,6 +19,7 @@ export default function App({ Component, pageProps }) {
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
         <GlobalStyles />
+        <Header />
         <GlobalContainer>
           <Component {...pageProps} />
         </GlobalContainer>
