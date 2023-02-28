@@ -1,16 +1,15 @@
 import { useMemo, useState } from "react";
-import axios from "axios";
 import Head from "next/head";
 import tw from "twin.macro";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 
 import * as api from "../api/homeInfo";
 import { useHomeInfo } from "../hooks/useHomeInfo";
+import { useCategory } from "@/hooks/useCategory";
 
 import AnimationRevealPage from "@/components/AnimationRevealPage";
 import Hero from "@/components/Hero";
 import TabGrid from "@/components/TabGrid";
-import { useCategory } from "@/hooks/useCategory";
 
 const Container = tw.div`flex flex-1 w-full justify-center`;
 const HighlightedText = tw.div`bg-primary-500 text-gray-100 px-4 inline-block`;
@@ -35,7 +34,6 @@ export default () => {
   const { data: homeInfo } = useHomeInfo();
   const { data: category, isFetching: isFetchingCategoryProducts } =
     useCategory(activeTab.id);
-  // const whatsAppNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER;
 
   const imageCss = tw`rounded-4xl`;
 

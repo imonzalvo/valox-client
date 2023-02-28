@@ -6,6 +6,5 @@ export const useCategory = (id) => {
     queryKey: ["category", id],
     queryFn: () => api.getCategoryById(id),
     enabled: id != "todos",
-    staleTime: Infinity,
   });
 };

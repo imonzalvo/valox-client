@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
 import tw from "twin.macro";
+import { motion } from "framer-motion";
+import { useRouter } from "next/router";
 import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
-// import SvgDecoratorBlob1 from "../images/svg-decorator-blob-5.svg";
-// import { ReactComponent as SvgDecoratorBlob2 } from "../images/svg-decorator-blob-7.svg";
-
 import HashLoader from "react-spinners/HashLoader";
 
 export const SectionHeading = tw.h2`text-4xl sm:text-5xl font-black tracking-wide text-center`;
@@ -63,20 +61,14 @@ export default ({
   setActiveTab,
   isFetching,
 }) => {
-//   const navigate = useNavigate();
+  const router = useRouter();
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
   const [selectedImageTitle, setSelectedImageTitle] = useState("");
   const toggleModal = () => setModalIsOpen(!modalIsOpen);
-  /*
-   * To customize the tabs, pass in data using the `tabs` prop. It should be an object which contains the name of the tab
-   * as the key and value of the key will be its content (as an array of objects).
-   * To see what attributes are configurable of each object inside this array see the example above for "Starters".
-   */
 
   function goToVip(id) {
-    console.log("nav");
-    // navigate(`/vip/${id}`);
+    router.push(`/products/${id}`);
   }
 
   return (
@@ -165,8 +157,6 @@ export default ({
           />
         </LoaderContainer>
       </InnerContainer>
-      {/* <DecoratorBlob1 />
-      <DecoratorBlob2 /> */}
     </Container>
   );
 };
