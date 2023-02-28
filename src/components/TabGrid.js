@@ -113,10 +113,10 @@ export default ({
                   "localhost"
                 );
               const cardImageThumbnail = `${
-                isLocal ? "" : process.env.REACT_APP_API_URL
+                isLocal ? "" : process.env.NEXT_PUBLIC_API_URL
               }${card.images[0].image.sizes["thumbnail"].url}`;
               const cardImage = `${
-                isLocal ? "" : process.env.REACT_APP_API_URL
+                isLocal ? "" : process.env.NEXT_PUBLIC_API_URL
               }${card.images[0].image.url}`;
 
               return (

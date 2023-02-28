@@ -52,11 +52,11 @@ const getProductImages = (product) =>
     const originalImageUrl =
       image.image.url && image.image.url.includes("localhost")
         ? `${image.image.url}`
-        : `${process.env.REACT_APP_API_URL}${image.image.url}`;
+        : `${process.env.NEXT_PUBLIC_API_URL}${image.image.url}`;
     const thumbnailUrl =
       image.image.url && image.image.url.includes("localhost")
         ? `${image.image.sizes.thumbnail.url}`
-        : `${process.env.REACT_APP_API_URL}${image.image.sizes.thumbnail.url}`;
+        : `${process.env.NEXT_PUBLIC_API_URL}${image.image.sizes.thumbnail.url}`;
     return {
       original: originalImageUrl,
       thumbnail: thumbnailUrl,
