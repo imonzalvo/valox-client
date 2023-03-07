@@ -61,11 +61,12 @@ export default () => {
   const landingImageUrl = `${isLocal ? "" : process.env.NEXT_PUBLIC_API_URL}${
     homeInfo.company.configurations.image.sizes["tablet"].url
   }`;
+  console.log("home", homeInfo.description)
   return (
     <Container>
       <Head>
         <title>{process.env.NEXT_PUBLIC_BUSINESS_TITLE}</title>
-        <meta name="description" content={homeInfo.description} />
+        <meta name="description" content={description} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
