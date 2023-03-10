@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useMemo } from "react";
 import tw from "twin.macro";
 import { useRouter } from "next/router";
 
@@ -28,7 +28,7 @@ const FormTitle = tw.h1`font-bold`;
 export default () => {
   const {
     query: { product },
-    push
+    push,
   } = useRouter();
 
   const bottomRef = useRef(null);
@@ -38,7 +38,7 @@ export default () => {
 
   const {
     status,
-    data: productData,
+    data: checkoutInfo,
     isFetching,
     error,
   } = useCheckoutInfo(product);
@@ -49,7 +49,6 @@ export default () => {
     },
   });
 
-  console.log("CHO", status, productData);
   const {
     register,
     handleSubmit,
@@ -70,12 +69,12 @@ export default () => {
     }
 
     if (!!selectedPaymentMethod && !!selectedShippingOption) {
-      console.log("proddddd", productData);
+      console.log("proddddd", checkoutInfo);
       mutate({
         ...data,
         shippingOption: selectedShippingOption,
         paymentMethod: selectedPaymentMethod,
-        products: productData.products,
+        products: checkoutInfo.products,
       });
     } else {
       scrollToBottom();
@@ -84,6 +83,42 @@ export default () => {
 
   const [selectedShippingOption, setSelectedShippingOption] = useState(null);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
+
+  const shippingOptions = useMemo(() => {
+    if (!checkoutInfo) {
+      return [];
+    }
+
+    return checkoutInfo.shippingOptions.map((shippingOption) => {
+      console.log("shippingOption", shippingOption)
+
+      return {
+        id: shippingOption.shippingOption.id,
+        name: shippingOption.shippingOption.name,
+        description: shippingOption.shippingOption.description,
+        // TODO: Cost * products
+        cost: shippingOption.cost,
+      };
+    });
+  }, [checkoutInfo]);
+
+  const paymentMethods = useMemo(() => {
+    console.log("hola?", !checkoutInfo)
+    if (!checkoutInfo) {
+      return [];
+    }
+
+    return checkoutInfo.paymentMethods.map((paymentMethod) => {
+      console.log("paymentMethod", paymentMethod)
+      return {
+        id: paymentMethod.paymentMethod.id,
+        name: paymentMethod.paymentMethod.name,
+        description: paymentMethod.paymentMethod.description,
+        // TODO: Cost * products
+        price: paymentMethod.cost,
+      };
+    });
+  }, [checkoutInfo]);
 
   function goToCongrats(orderId) {
     push(`/orderCongrats?orderId=${orderId}`);
@@ -104,6 +139,7 @@ export default () => {
   if (isFetching) {
     return renderSpinner();
   }
+
   return (
     <Container>
       <LeftContainer>
@@ -119,13 +155,13 @@ export default () => {
       </LeftContainer>
       {console.log("error", errors)}
       <RightContainer>
-        {productData && productData.products && (
+        {checkoutInfo && checkoutInfo.products && (
           <CartSummary
-            products={productData.products}
-            shippingOptions={productData.shippingOptions}
+            products={checkoutInfo.products}
+            shippingOptions={shippingOptions}
             selectedShippingOption={selectedShippingOption}
             selectShippingOption={setSelectedShippingOption}
-            paymentMethods={productData.paymentMethods}
+            paymentMethods={paymentMethods}
             selectedPaymentMethod={selectedPaymentMethod}
             selectPaymentMethod={setSelectedPaymentMethod}
             shippingOptionError={

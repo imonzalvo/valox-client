@@ -1,21 +1,17 @@
 import { useMemo } from "react";
 import tw from "twin.macro";
 
+import Options from "./Options";
+import SelectedOption from "./SelectedOption";
+
 const CartSumaryContainer = tw.div`flex flex-col w-2/3 tablet:w-full shadow-md p-4 rounded-md h-fit m-4 small:m-0 bg-gray-100`;
-const Row = tw.div`flex flex-row justify-between items-center`;
+export const Row = tw.div`flex flex-row justify-between items-center`;
 const Title = tw.h1`text-xl font-extrabold md:text-xl lg:text-xl xl:text-xl text-gray-900 leading-tight font-sans`;
-const Subtitle = tw.h2`text-base font-semibold font-sans`;
-const Product = tw.h2`mt-2 mb-2 text-base font-light text-gray-700 font-sans`;
-const ProductQuantity = tw.h2`mt-2 mb-2 text-base font-light text-gray-700 font-sans`;
+export const Subtitle = tw.h2`text-base font-semibold font-sans`;
+export const Product = tw.h2`mt-2 mb-2 text-base font-light text-gray-700 font-sans`;
 const BigDivider = tw.hr`h-px my-6 bg-gray-200 border-0 dark:bg-gray-700 w-full`;
-const SmallDivider = tw.hr`h-px my-2 bg-gray-200 border-0 dark:bg-gray-700 w-full`;
-const OptionsContainer = tw.div`flex flex-col`;
-const Option = tw.div` cursor-pointer flex flex-row mt-4 justify-between`;
-const OptionInfo = tw.div`pr-4`;
-const OptionTitle = tw.span`font-sans font-bold`;
-const OptionDescription = tw.span`font-sans mr-2 text-sm`;
-const Input = tw.input`mr-4 cursor-pointer`;
-const ErrorMessage = tw.span`mt-2 ml-4 text-red-600`;
+
+export const ProductQuantity = tw.h2`mt-2 mb-2 text-base font-light text-gray-700 font-sans`;
 
 const calculatePaymentMethodCost = (
   paymentMethod,
@@ -96,43 +92,6 @@ export default function CartSummary({
   const totalPurchaseAmount =
     productsTotalAmount + paymentMethodCost + shippingOptionCost;
 
-  const renderOptionsSection = (
-    optionsTitle,
-    options,
-    selectedOption,
-    selectOption,
-    error
-  ) => (
-    <Row>
-      <OptionsContainer>
-        <Subtitle>{optionsTitle}</Subtitle>
-        {options.map((option) => {
-          const optionPrice = option && !!option.price ? option.price : 0;
-
-          return (
-            <Option onClick={() => selectOption(option.id)} key={option.id}>
-              <OptionInfo>
-                <Input
-                  type={"radio"}
-                  value={option.id}
-                  checked={selectedOption === option.id}
-                  onChange={(event) => selectOption(event.target.value)}
-                ></Input>
-                <OptionDescription>
-                  <OptionTitle>{option.name}</OptionTitle>
-                  {" - "}
-                  {option.description}
-                </OptionDescription>
-              </OptionInfo>
-              <span style={{ flex: "none" }}>{`$ ${optionPrice}`}</span>
-            </Option>
-          );
-        })}
-        {!!error && <ErrorMessage>{error}</ErrorMessage>}
-      </OptionsContainer>
-    </Row>
-  );
-
   const renderSelectedOption = (optionsTitle, option) => (
     <>
       <Row>
@@ -170,7 +129,7 @@ export default function CartSummary({
         <Subtitle>{`$ ${totalPurchaseAmount}`}</Subtitle>
       </Row> */}
       <BigDivider />
-      {shippingOptions
+      {/* {shippingOptions
         ? renderOptionsSection(
             "Envío",
             shippingOptions,
@@ -178,17 +137,30 @@ export default function CartSummary({
             selectShippingOption,
             shippingOptionError ? "Elegir opción de envío" : false
           )
-        : renderSelectedOption("Envío", shippingOption)}
+        : renderSelectedOption("Envío", shippingOption)} */}
+      {shippingOptions ? (
+        <Options
+          optionsTitle={"Envío"}
+          options={shippingOptions}
+          selectedOption={selectedShippingOption}
+          selectOption={selectShippingOption}
+          error={shippingOptionError ? "Elegir opción de envío" : false}
+        />
+      ) : (
+        <SelectedOption title={"Envío"} option={shippingOption} />
+      )}
       <BigDivider />
-      {!!paymentMethods
-        ? renderOptionsSection(
-            "Forma de Pago",
-            paymentMethods,
-            selectedPaymentMethod,
-            selectPaymentMethod,
-            paymentMethodError ? "Elegir método de pago" : false
-          )
-        : renderSelectedOption("Forma de pago", paymentMethod)}
+      {!!paymentMethods ? (
+        <Options
+          optionsTitle={"Forma de Pago"}
+          options={paymentMethods}
+          selectedOption={selectedPaymentMethod}
+          selectOption={selectPaymentMethod}
+          error={paymentMethodError ? "Elegir método de pago" : false}
+        />
+      ) : (
+        <SelectedOption title={"Forma de pago"} option={paymentMethod} />
+      )}
       <BigDivider />
       <Row>
         <Subtitle>Total</Subtitle>
