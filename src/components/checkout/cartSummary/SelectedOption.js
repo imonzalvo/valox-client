@@ -3,7 +3,7 @@ import { Row, Subtitle, ProductQuantity, Product } from "./index";
 
 export default function ({ title, option }) {
   return (
-    <div>
+    <>
       <Row>
         <Subtitle>{title}</Subtitle>
         <Subtitle>Costo</Subtitle>
@@ -14,6 +14,6 @@ export default function ({ title, option }) {
           !!option.price ? option.price : 0
         }`}</ProductQuantity>
       </Row>
-    </div>
+    </>
   );
 }
