@@ -1,7 +1,6 @@
 import axios from "axios";
 
 export const getCategoryById = async (id) => {
-    console.log("id", id)
   const { data } = await axios({
     headers: {
       "Content-Type": "application/json",

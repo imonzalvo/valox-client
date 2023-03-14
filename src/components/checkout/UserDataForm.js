@@ -1,5 +1,6 @@
 import tw from "twin.macro";
 import CustomInput from "../input/index";
+import Select from "../input/Select";
 
 const Form = tw.form`flex flex-col items-start w-full`;
 const Separator = tw.div`tablet:w-0 w-8 mt-4`;
@@ -25,6 +26,7 @@ export default ({ handleSubmit, register, errors, onSubmit }) => {
         <Separator style={{ width: 32 }}></Separator>
         <CustomInput
           label="Apellido"
+          placeholder={"Perez"}
           register={register}
           inputOptions={{
             required: true,
@@ -73,13 +75,14 @@ export default ({ handleSubmit, register, errors, onSubmit }) => {
         />
       </InputContainer>
       <InputContainer>
-        <CustomInput
+        <Select
           label="Departamento"
           placeholder="Montevideo"
           register={register}
           inputOptions={{
             required: true,
           }}
+          options={cityOptions}
           name="city"
           errors={errors.city}
         />
@@ -96,9 +99,44 @@ export default ({ handleSubmit, register, errors, onSubmit }) => {
           errors={errors.postalCode}
         />
       </InputContainer>
+      <InputContainer>
+        <CustomInput
+          label="Comentarios"
+          placeholder="Información extra..."
+          register={register}
+          inputOptions={{
+            required: false,
+          }}
+          type="text"
+          name="notes"
+          errors={errors.notes}
+          isLargeInput
+        />
+      </InputContainer>
       <SubmitButton onClick={handleSubmit} type="submit">
         Realizar Pedido
       </SubmitButton>
     </Form>
   );
 };
+
+const cityOptions = [
+  "Artigas",
+  "Canelones",
+  "Cerro Largo",
+  "Colonia",
+  "Durazno",
+  "Flores",
+  "Florida",
+  "Lavalleja",
+  "Maldonado",
+  "Montevideo",
+  "Paysandú",
+  "Río Negro",
+  "Rivera",
+  "Rocha",
+  "Salto",
+  "San José",
+  "Soriano",
+  "Tacuarembó",
+];

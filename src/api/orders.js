@@ -1,5 +1,16 @@
 import axios from "axios";
 
+const mapProducts = (products) => {
+  return products.map((product) => {
+    return {
+      id: product.productId,
+      quantity: product.quantity,
+      price: product.unitPrice,
+      title: product.title,
+    };
+  });
+};
+
 export const getOrderById = async (id) => {
   const { data } = await axios({
     headers: {
@@ -10,7 +21,23 @@ export const getOrderById = async (id) => {
     url: `${process.env.NEXT_PUBLIC_API_URL}/api/orders/${id}?depth=3`,
   });
 
-  return data;
+  return {
+    createdAt: data.createdAt,
+    details: {
+      totalAmount: data.details.totalAmount,
+      paymentMethod: {
+        name: data.paymentMethod.name,
+        description: data.paymentMethod.description,
+        cost: data.details.paymentMethodCost,
+      },
+      shippingOption: {
+        name: data.shippingOption.name,
+        description: data.shippingOption.description,
+        cost: data.details.shippingCost,
+      },
+    },
+    products: mapProducts(data.products),
+  };
 };
 
 export const createOrder = async (data) => {
@@ -22,7 +49,8 @@ export const createOrder = async (data) => {
   });
 
   const request = {
-    clientName: `${data.name} ${data.lastName}`,
+    clientName: data.name,
+    clientLastName: data.lastName,
     clientEmail: data.email,
     clientPhone: data.phone,
     address: data.address,

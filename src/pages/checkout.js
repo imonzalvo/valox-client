@@ -2,7 +2,6 @@ import { useState, useRef, useMemo } from "react";
 import tw from "twin.macro";
 import { useRouter } from "next/router";
 
-import HashLoader from "react-spinners/HashLoader";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 
@@ -11,8 +10,9 @@ import { useCheckoutInfo } from "@/hooks/useCheckoutInfo";
 
 import CartSummary from "../components/checkout/cartSummary/index";
 import UserDataForm from "../components/checkout/UserDataForm";
+import Loader from "@/components/common/Loader";
 
-const Container = tw.div`flex justify-between flex-1 font-sans max-w-screen-xl px-2
+const Container = tw.div`flex mt-12 justify-between flex-1 font-sans max-w-screen-xl px-2
 sm:flex-col md:flex-col lg:flex-row xl:flex-row 2xl:flex-row tablet:flex-col tablet:items-center
 tablet:mb-12
 `;
@@ -36,14 +36,10 @@ export default () => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const {
-    status,
-    data: checkoutInfo,
-    isFetching,
-    error,
-  } = useCheckoutInfo(product);
+  const { data: checkoutInfo, isFetching: isFetchingCheckoutInfo } =
+    useCheckoutInfo(product);
 
-  const { mutate } = useMutation(api.createOrder, {
+  const { mutate, isLoading: isCreatingOrder } = useMutation(api.createOrder, {
     onSuccess: (data) => {
       goToCongrats(data.id);
     },
@@ -69,7 +65,6 @@ export default () => {
     }
 
     if (!!selectedPaymentMethod && !!selectedShippingOption) {
-      console.log("proddddd", checkoutInfo);
       mutate({
         ...data,
         shippingOption: selectedShippingOption,
@@ -90,10 +85,8 @@ export default () => {
     }
 
     return checkoutInfo.shippingOptions.map((shippingOption) => {
-      console.log("shippingOption", shippingOption)
-
       return {
-        id: shippingOption.shippingOption.id,
+        id: shippingOption.id,
         name: shippingOption.shippingOption.name,
         description: shippingOption.shippingOption.description,
         // TODO: Cost * products
@@ -103,15 +96,13 @@ export default () => {
   }, [checkoutInfo]);
 
   const paymentMethods = useMemo(() => {
-    console.log("hola?", !checkoutInfo)
     if (!checkoutInfo) {
       return [];
     }
 
     return checkoutInfo.paymentMethods.map((paymentMethod) => {
-      console.log("paymentMethod", paymentMethod)
       return {
-        id: paymentMethod.paymentMethod.id,
+        id: paymentMethod.id,
         name: paymentMethod.paymentMethod.name,
         description: paymentMethod.paymentMethod.description,
         // TODO: Cost * products
@@ -124,20 +115,8 @@ export default () => {
     push(`/orderCongrats?orderId=${orderId}`);
   }
 
-  const renderSpinner = () => (
-    <Container>
-      <HashLoader
-        loading={isFetching}
-        size={350}
-        color={"#aaa"}
-        aria-label="Loading Spinner"
-        data-testid="loader"
-      />
-    </Container>
-  );
-
-  if (isFetching) {
-    return renderSpinner();
+  if (isFetchingCheckoutInfo || isCreatingOrder) {
+    return <Loader isLoading={isFetchingCheckoutInfo || isCreatingOrder} />;
   }
 
   return (
@@ -153,7 +132,6 @@ export default () => {
           />
         </div>
       </LeftContainer>
-      {console.log("error", errors)}
       <RightContainer>
         {checkoutInfo && checkoutInfo.products && (
           <CartSummary

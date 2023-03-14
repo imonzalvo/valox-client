@@ -10,9 +10,9 @@ import { useProduct } from "../../hooks/useProduct";
 
 import QuantityPicker from "../../components/products/QuantityPicker";
 
-const Container = tw.div`flex justify-center px-10 sm:py-12
+const Container = tw.div`mt-12 flex justify-between sm:py-12
 md:flex-row
-py-4 w-full flex flex-1 flex-col my-0 mx-auto  small:mb-12`;
+max-w-screen-xl flex flex-1 flex-col my-0  small:mb-12`;
 
 const ImageContainer = styled.div`
   .image-gallery-image {
@@ -90,7 +90,7 @@ export default () => {
   };
 
   if (isFetching || !product) {
-    return;
+    <Loader isLoading={isFetching} />;
   }
 
   function increment() {

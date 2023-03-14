@@ -61,7 +61,7 @@ export default () => {
   const landingImageUrl = `${isLocal ? "" : process.env.NEXT_PUBLIC_API_URL}${
     homeInfo.company.configurations.image.sizes["tablet"].url
   }`;
-  console.log("home", homeInfo.description)
+  
   return (
     <Container>
       <Head>

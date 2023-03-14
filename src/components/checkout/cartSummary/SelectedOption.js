@@ -11,7 +11,7 @@ export default function ({ title, option }) {
       <Row>
         <Product>{`${option.name}`}</Product>
         <ProductQuantity>{`$ ${
-          !!option.price ? option.price : 0
+          !!option.cost ? option.cost : 0
         }`}</ProductQuantity>
       </Row>
     </>

@@ -1,11 +1,14 @@
 import tw from "twin.macro";
 import { useRouter } from "next/router";
 import HashLoader from "react-spinners/HashLoader";
+import { dehydrate, QueryClient } from "@tanstack/react-query";
 
 import CartSummary from "../components/checkout/cartSummary/index";
 import { useOrder } from "@/hooks/useOrder";
+import * as api from "../api/orders";
+import Loader from "@/components/common/Loader";
 
-const Container = tw.div`flex justify-between flex-1 max-w-screen-xl px-2
+const Container = tw.div`mt-12 flex justify-between flex-1 max-w-screen-xl px-2
 sm:flex-col md:flex-col lg:flex-row xl:flex-row 2xl:flex-row tablet:flex-col tablet:items-center
 tablet:mb-20
 `;
@@ -27,28 +30,33 @@ const OrderSummaryRow = tw.div`flex flex-row mt-4`;
 const OrderSummaryTitle = tw.span`font-bold mr-2 whitespace-nowrap`;
 const OrderSummaryInfo = tw.span`mr-2`;
 
+export const getServerSideProps = async (ctx) => {
+  const { orderId } = ctx.query;
+
+  const queryClient = new QueryClient();
+
+  await queryClient.fetchQuery(["order", ctx.query], () =>
+    api.getOrderById(orderId)
+  );
+
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+  };
+};
+
 export default () => {
   const {
     query: { orderId },
     isReady,
   } = useRouter();
 
-  if (!isReady) {
-    return (
-      <Container>
-        <HashLoader
-          loading={true}
-          size={350}
-          color={"#aaa"}
-          aria-label="Loading Spinner"
-          data-testid="loader"
-        />
-      </Container>
-    );
-  }
-
   const { data, isFetching } = useOrder(orderId);
 
+  if (!isReady || isFetching) {
+    return <Loader isLoading={!isReady || isFetching} />;
+  }
 
   const getFormattedDate = (rawDate) => {
     const date = new Date(rawDate);
@@ -64,81 +72,55 @@ export default () => {
     return realMonth < 10 ? `0${realMonth}` : realMonth;
   };
 
-  const products =
-    data &&
-    data.products.map((orderProduct) => {
-      const { product } = orderProduct;
-      return {
-        id: product.id,
-        quantity: orderProduct.quantity,
-        price: orderProduct.unitPrice,
-        title: product.title,
-      };
-    });
   return (
     <>
       <Container>
-        {isFetching && (
-          <HashLoader
-            loading={isFetching}
-            size={350}
-            color={"#aaa"}
-            aria-label="Loading Spinner"
-            data-testid="loader"
-          />
-        )}
-        <>
-          <LeftContainer>
-            <OrderContainer>
-              <Title>Gracias! Tu pedido ha sido recibido</Title>
-              <OrderInfo>
-                <Row>
-                  <RowTitle>Codigo del pedido</RowTitle>
-                  <RowInfo>{orderId}</RowInfo>
-                </Row>
-                <Row>
-                  <RowTitle>Fecha</RowTitle>
-                  <RowInfo>
-                    {data && data.createdAt && getFormattedDate(data.createdAt)}
-                  </RowInfo>
-                </Row>
-                <Row style={{ border: "none" }}>
-                  <RowTitle>Total</RowTitle>
-                  <RowInfo>$ {data && data.totalAmount}</RowInfo>
-                </Row>
-              </OrderInfo>
+        <LeftContainer>
+          <OrderContainer>
+            <Title>Gracias! Tu pedido ha sido recibido</Title>
+            <OrderInfo>
+              <Row>
+                <RowTitle>Codigo del pedido</RowTitle>
+                <RowInfo>{orderId}</RowInfo>
+              </Row>
+              <Row>
+                <RowTitle>Fecha</RowTitle>
+                <RowInfo>{getFormattedDate(data.createdAt)}</RowInfo>
+              </Row>
+              <Row style={{ border: "none" }}>
+                <RowTitle>Total</RowTitle>
+                <RowInfo>$ {data.details.totalAmount}</RowInfo>
+              </Row>
+            </OrderInfo>
 
-              <OrderSummary>
-                <OrderSummaryRow>
-                  <OrderSummaryTitle>Metodo de pago:</OrderSummaryTitle>
-                  <OrderSummaryInfo>
-                    {data && data.paymentMethod.name}
+            <OrderSummary>
+              <OrderSummaryRow>
+                <OrderSummaryTitle>Metodo de pago:</OrderSummaryTitle>
+                <OrderSummaryInfo>
+                  {data.details.paymentMethod.name}
+                </OrderSummaryInfo>
+              </OrderSummaryRow>
+              <OrderSummaryRow style={{ border: "none" }}>
+                <OrderSummaryTitle>Metodo de envío:</OrderSummaryTitle>
+                <span>
+                  <OrderSummaryInfo style={{ fontWeight: "bold" }}>
+                    {`${data.details.shippingOption.name} - `}
                   </OrderSummaryInfo>
-                </OrderSummaryRow>
-                <OrderSummaryRow style={{ border: "none" }}>
-                  <OrderSummaryTitle>Metodo de envío:</OrderSummaryTitle>
-                  <span>
-                    <OrderSummaryInfo style={{ fontWeight: "bold" }}>
-                      {data && `${data.shippingOption.name} - `}
-                    </OrderSummaryInfo>
-                    <OrderSummaryInfo>
-                      {data && data.shippingOption.description}
-                    </OrderSummaryInfo>
-                  </span>
-                </OrderSummaryRow>
-              </OrderSummary>
-            </OrderContainer>
-          </LeftContainer>
-          <RightContainer>
-            {data && data.products && (
-              <CartSummary
-                products={products}
-                shippingOption={data.shippingOption}
-                paymentMethod={data.paymentMethod}
-              ></CartSummary>
-            )}
-          </RightContainer>
-        </>
+                  <OrderSummaryInfo>
+                    {data.details.shippingOption.description}
+                  </OrderSummaryInfo>
+                </span>
+              </OrderSummaryRow>
+            </OrderSummary>
+          </OrderContainer>
+        </LeftContainer>
+        <RightContainer>
+          <CartSummary
+            products={data.products}
+            shippingOption={data.details.shippingOption}
+            paymentMethod={data.details.paymentMethod}
+          ></CartSummary>
+        </RightContainer>
       </Container>
     </>
   );

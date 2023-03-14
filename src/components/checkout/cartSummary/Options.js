@@ -1,7 +1,7 @@
 import tw from "twin.macro";
 import { Row, Subtitle } from "./index";
 
-const OptionsContainer = tw.div`flex flex-col`;
+const OptionsContainer = tw.div`flex flex-col w-full`;
 const Option = tw.div` cursor-pointer flex flex-row mt-4 justify-between`;
 const OptionInfo = tw.div`pr-4`;
 const OptionTitle = tw.span`font-sans font-bold`;
@@ -21,7 +21,7 @@ export default function ({
       <OptionsContainer>
         <Subtitle>{optionsTitle}</Subtitle>
         {options.map((option) => {
-          const optionPrice = option && !!option.price ? option.price : 0;
+          const optionPrice = option && !!option.cost ? option.cost : 0;
 
           return (
             <Option onClick={() => selectOption(option.id)} key={option.id}>

@@ -19,15 +19,15 @@ const calculatePaymentMethodCost = (
   selectedPaymentMethod
 ) => {
   if (!!paymentMethod) {
-    return !!paymentMethod.price ? paymentMethod.price : 0;
+    return !!paymentMethod.cost ? paymentMethod.cost : 0;
   }
 
   const selectedOption = paymentMethods.filter((option) => {
     return option.id == selectedPaymentMethod;
   });
 
-  if (selectedOption.length > 0 && !!selectedOption[0].price) {
-    return selectedOption[0].price;
+  if (!!selectedOption && !!selectedOption.cost) {
+    return selectedOption.cost;
   }
   return 0;
 };
@@ -38,14 +38,14 @@ const calculateShippingOptionCost = (
   selectedShippingOption
 ) => {
   if (!!shippingOption) {
-    return !!shippingOption.price ? shippingOption.price : 0;
+    return !!shippingOption.cost ? shippingOption.cost : 0;
   }
 
-  const selectedOption = shippingOptions.filter((option) => {
+  const selectedOption = shippingOptions.find((option) => {
     return option.id == selectedShippingOption;
   });
 
-  return selectedOption.length > 0 ? selectedOption[0].price : 0;
+  return !!selectedOption ? selectedOption.cost : 0;
 };
 
 const calculateProductsTotalAmount = (products) =>
@@ -92,21 +92,6 @@ export default function CartSummary({
   const totalPurchaseAmount =
     productsTotalAmount + paymentMethodCost + shippingOptionCost;
 
-  const renderSelectedOption = (optionsTitle, option) => (
-    <>
-      <Row>
-        <Subtitle>{optionsTitle}</Subtitle>
-        <Subtitle>Costo</Subtitle>
-      </Row>
-      <Row>
-        <Product>{`${option.name}`}</Product>
-        <ProductQuantity>{`$ ${
-          !!option.price ? option.price : 0
-        }`}</ProductQuantity>
-      </Row>
-    </>
-  );
-
   return (
     <CartSumaryContainer>
       <Row>
@@ -129,15 +114,6 @@ export default function CartSummary({
         <Subtitle>{`$ ${totalPurchaseAmount}`}</Subtitle>
       </Row> */}
       <BigDivider />
-      {/* {shippingOptions
-        ? renderOptionsSection(
-            "Envío",
-            shippingOptions,
-            selectedShippingOption,
-            selectShippingOption,
-            shippingOptionError ? "Elegir opción de envío" : false
-          )
-        : renderSelectedOption("Envío", shippingOption)} */}
       {shippingOptions ? (
         <Options
           optionsTitle={"Envío"}
