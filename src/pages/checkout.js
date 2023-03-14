@@ -25,7 +25,7 @@ const RightContainer = tw(
 
 const FormTitle = tw.h1`font-bold`;
 
-export default () => {
+export default function Checkout() {
   const {
     query: { product },
     push,

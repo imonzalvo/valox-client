@@ -46,7 +46,7 @@ export const getServerSideProps = async (ctx) => {
   };
 };
 
-export default () => {
+export default function OrderCongrats() {
   const {
     query: { orderId },
     isReady,
@@ -124,4 +124,4 @@ export default () => {
       </Container>
     </>
   );
-};
+}

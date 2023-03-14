@@ -28,7 +28,7 @@ export const getServerSideProps = async () => {
   };
 };
 
-export default () => {
+export default function Index() {
   const [activeTab, setActiveTab] = useState({ name: "Todos", id: "todos" });
 
   const { data: homeInfo } = useHomeInfo();

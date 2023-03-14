@@ -72,7 +72,7 @@ const renderButton = (onClick, title) => {
   );
 };
 
-export default () => {
+export default function Product() {
   const router = useRouter();
   const {
     query: { id },
@@ -144,4 +144,4 @@ export default () => {
       </DetailsContainer>
     </Container>
   );
-};
+}

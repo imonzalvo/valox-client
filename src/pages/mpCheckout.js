@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 const Container = tw.div`flex justify-center px-10 flex-1 mt-4 md:flex-row lg:flex-row xl:flex-row 2xl:flex-row small:flex-col-reverse small:items-center`;
 const HalfContaier = tw.div`flex small:w-full flex-1 justify-center`;
 
-export default () => {
+export default function MpCheckout() {
   const { push } = useRouter();
   const PUBLIC_KEY = process.env.NEXT_PUBLIC_MERCADO_PAGO_PUBLIC_KEY;
   const [mercadopago, setMercadopago] = useState(null);
