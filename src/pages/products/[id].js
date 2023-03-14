@@ -1,9 +1,10 @@
 import { useState, useMemo } from "react";
-import { dehydrate, QueryClient } from "@tanstack/react-query";
 import tw, { styled } from "twin.macro";
-
 import { useRouter } from "next/router";
 import ImageGallery from "react-image-gallery";
+import { dehydrate, QueryClient } from "@tanstack/react-query";
+
+import Loader from "@/components/common/Loader";
 
 import * as api from "../../api/products";
 import { useProduct } from "../../hooks/useProduct";
