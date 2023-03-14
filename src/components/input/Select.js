@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import tw from "twin.macro";
 
 const Select = tw.select`border-solid border-gray-300 pl-3 pr-6 py-3 mt-2 hover:border-gray-700 focus:outline-none flex-1`;
@@ -22,7 +23,7 @@ export default ({
       {...register(name, inputOptions)}
     >
       {options.map((option) => (
-        <option value={option}>{option}</option>
+        <option value={option} key={option}>{option}</option>
       ))}
     </Select>
     {errors && errors.type == "required" && (
