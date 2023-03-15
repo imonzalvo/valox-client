@@ -26,7 +26,8 @@
     "react-image-gallery": "^1.2.11",
     "react-query": "^3.39.3",
     "react-spinners": "^0.13.8",
-    "styled-components": "^5.3.6"
+    "styled-components": "^5.3.6",
+    "react-floating-whatsapp": "^5.0.8"
   },
   "devDependencies": {
     "@emotion/babel-plugin": "^11.10.6",
