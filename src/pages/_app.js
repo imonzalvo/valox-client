@@ -1,4 +1,4 @@
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import "@/styles/globals.css";
 import {
@@ -14,6 +14,7 @@ import { CartProvider } from "../providers/Cart";
 import GlobalStyles from "./../styles/GlobalStyles";
 import Header from "@/components/header/Header";
 import Loader from "@/components/common/Loader";
+import Footer from "@/layout/footer";
 
 const GlobalContainer = tw.div`flex flex-1 justify-center md:w-full 
                                 sm:w-full lg:w-full px-8 tablet:px-4 bg-white`;
@@ -45,8 +46,13 @@ export default function App({ Component, pageProps }) {
           <GlobalStyles />
           <Header />
           <GlobalContainer>
-            {!pageLoading ? <Component {...pageProps} /> : <Loader isLoading={true} />}
+            {!pageLoading ? (
+              <Component {...pageProps} />
+            ) : (
+              <Loader isLoading={true} />
+            )}
           </GlobalContainer>
+          <Footer />
           {!!whatsAppNumber && (
             <div style={{ position: "absolute" }}>
               <FloatingWhatsApp
