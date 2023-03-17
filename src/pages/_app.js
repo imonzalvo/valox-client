@@ -12,6 +12,7 @@ import { config } from "../lib/react-query-config";
 import { CartProvider } from "../providers/Cart";
 import GlobalStyles from "./../styles/GlobalStyles";
 import Header from "@/components/header/Header";
+
 const GlobalContainer = tw.div`flex flex-1 justify-center md:w-full 
                                 sm:w-full lg:w-full px-8 tablet:px-4 bg-white`;
 
