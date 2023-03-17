@@ -7,7 +7,7 @@ max-w-screen-xl flex flex-1 flex-col my-0  small:mb-12`;
 
 export default function Loader({ isLoading }) {
   return (
-    <Container style={{ justifyContent: "center", zIndex: 999 }}>
+    <Container style={{ justifyContent: "center" }}>
       <HashLoader
         loading={isLoading}
         size={350}
