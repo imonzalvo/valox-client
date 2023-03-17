@@ -5,5 +5,6 @@ export const useOrder = (id) => {
   return useQuery({
     queryKey: ["order", id],
     queryFn: () => api.getOrderById(id),
+    staleTime: 0
   });
 };

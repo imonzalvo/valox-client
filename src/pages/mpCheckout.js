@@ -1,29 +1,55 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import tw from "twin.macro";
 import Script from "next/script";
-import HashLoader from "react-spinners/HashLoader";
-
-// import useMercadopago from "../hooks/useMercadoPago";
-import CartSummary from "../components/checkout/cartSummary";
 import { useRouter } from "next/router";
+import { dehydrate, QueryClient } from "@tanstack/react-query";
+
+import * as api from "../api/orders";
+import { useOrder } from "@/hooks/useOrder";
+import Loader from "@/components/common/Loader";
+import CartSummary from "../components/checkout/cartSummary";
 
 const Container = tw.div`flex justify-center px-10 flex-1 mt-4 md:flex-row lg:flex-row xl:flex-row 2xl:flex-row small:flex-col-reverse small:items-center`;
 const HalfContaier = tw.div`flex small:w-full flex-1 justify-center`;
 
-export default function MpCheckout() {
-  const { push } = useRouter();
-  const PUBLIC_KEY = process.env.NEXT_PUBLIC_MERCADO_PAGO_PUBLIC_KEY;
-  const [mercadopago, setMercadopago] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+export const getServerSideProps = async (ctx) => {
+  const { orderId } = ctx.query;
 
-  function goToCongrats(paymentId) {
-    push(`/congrats/${paymentId}`);
+  const queryClient = new QueryClient();
+
+  await queryClient.fetchQuery(["order", ctx.query], () =>
+    api.getOrderById(orderId)
+  );
+
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+  };
+};
+
+export default function MpCheckout() {
+  const PUBLIC_KEY = process.env.NEXT_PUBLIC_MERCADO_PAGO_PUBLIC_KEY;
+
+  const {
+    push,
+    query: { orderId },
+    isReady,
+  } = useRouter();
+
+  const { data, isFetching } = useOrder(orderId);
+
+  const [mercadopago, setMercadopago] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  if (isFetching || isLoading) {
+    return <Loader isLoading={true} />;
   }
 
-  const product = useMemo(() => {
-    return { price: 100 };
-  }, []);
+  function goToCongrats(orderId) {
+    push(`/congrats?orderId=${orderId}`);
+  }
 
   const buildTransaction = (cardFormData) => ({
     token: cardFormData.token,
@@ -38,7 +64,8 @@ export default function MpCheckout() {
       },
     },
     installments: 6,
-    transactionAmount: product.price,
+    transactionAmount: data.details.totalAmount,
+    orderId: orderId
   });
 
   const onFormSubmit = (cardFormData) =>
@@ -50,7 +77,7 @@ export default function MpCheckout() {
         )
         .then((res) => {
           resolve();
-          goToCongrats(res.data.paymentId);
+          goToCongrats(res.data.id);
         })
         .catch((e) => {
           console.log("error", e);
@@ -62,11 +89,10 @@ export default function MpCheckout() {
     const mercadopagoAux = new window.MercadoPago(PUBLIC_KEY, {
       locale: "es-UY",
     });
-
     const settings = {
       locale: "es-UY",
       initialization: {
-        amount: product.price,
+        amount: data && data.details.totalAmount,
       },
       callbacks: {
         onReady: () => {
@@ -80,10 +106,10 @@ export default function MpCheckout() {
       },
       customization: {
         paymentMethods: {
-            minInstallments: 1,
-            maxInstallments: 12,
+          minInstallments: 1,
+          maxInstallments: 12,
         },
-    },
+      },
     };
     mercadopagoAux
       .bricks()
@@ -93,13 +119,14 @@ export default function MpCheckout() {
       });
 
     setMercadopago(mercadopagoAux);
+    setIsLoading(false)
   };
 
   const renderMPScript = () => {
     return (
       <Script
         src="https://sdk.mercadopago.com/js/v2"
-        onLoad={(a) => {
+        onReady={(a) => {
           setUp();
         }}
       />
@@ -110,17 +137,6 @@ export default function MpCheckout() {
     <>
       {renderMPScript()}
       <Container>
-        {isLoading && (
-          <HashLoader
-            loading={isLoading}
-            size={350}
-            color={"#aaa"}
-            aria-label="Loading Spinner"
-            data-testid="loader"
-          />
-        )}
-      </Container>
-      <Container style={isLoading ? { display: "none" } : {}}>
         <HalfContaier
           id="cardPaymentBrick_container"
           style={{ fontFamily: "sans-serif" }}
@@ -131,4 +147,4 @@ export default function MpCheckout() {
       </Container>
     </>
   );
-};
+}

@@ -22,6 +22,7 @@ export const getOrderById = async (id) => {
   });
 
   return {
+    id: data.id,
     createdAt: data.createdAt,
     details: {
       totalAmount: data.details.totalAmount,
@@ -36,7 +37,9 @@ export const getOrderById = async (id) => {
         cost: data.details.shippingCost,
       },
     },
+    payment: data.payment,
     products: mapProducts(data.products),
+    status: data.status
   };
 };
 
@@ -60,8 +63,6 @@ export const createOrder = async (data) => {
     paymentMethod: data.paymentMethod,
     products: products,
   };
-
-  console.log("req", request, data);
 
   const response = await axios.post(
     `${process.env.NEXT_PUBLIC_API_URL}/create_order/${process.env.NEXT_PUBLIC_BUSINESS_HANDLE}`,

@@ -8,6 +8,7 @@ import Loader from "@/components/common/Loader";
 
 import * as api from "../../api/products";
 import { useProduct } from "../../hooks/useProduct";
+import { useCart } from "../../providers/Cart";
 
 import QuantityPicker from "../../components/products/QuantityPicker";
 
@@ -73,6 +74,8 @@ const renderButton = (onClick, title) => {
 };
 
 export default function Product() {
+  const { cart, addItemToCart, isProductInCart } = useCart();
+
   const router = useRouter();
   const {
     query: { id },
@@ -87,6 +90,18 @@ export default function Product() {
   }, [product]);
 
   const goToCheckout = () => {
+    // addItemToCart({
+    //   id,
+    //   quantity: numberOfitems,
+    //   product: {
+    //     id: id,
+    //     title: product.title,
+    //     description: product.description,
+    //     price: product.price,
+    //     image: product.images[0].image.sizes.thumbnail.url,
+    //   },
+    // });
+
     router.push(`/checkout?product=${product.id}`);
   };
 

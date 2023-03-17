@@ -111,8 +111,19 @@ export default function Checkout() {
     });
   }, [checkoutInfo]);
 
+  const getSelectedPaymentMethod = () => {
+    return checkoutInfo.paymentMethods.find((shippingOption) => {
+      return shippingOption.id == selectedPaymentMethod;
+    });
+  };
+
   function goToCongrats(orderId) {
-    push(`/orderCongrats?orderId=${orderId}`);
+    const paymentMethod = getSelectedPaymentMethod();
+    if (paymentMethod.paymentMethod.mercadopago) {
+      push(`/mpCheckout?orderId=${orderId}`);
+    } else {
+      push(`/congrats?orderId=${orderId}`);
+    }
   }
 
   if (isFetchingCheckoutInfo || isCreatingOrder) {
@@ -154,4 +165,4 @@ export default function Checkout() {
       </RightContainer>
     </Container>
   );
-};
+}
