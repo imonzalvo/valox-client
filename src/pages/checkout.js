@@ -126,7 +126,7 @@ export default function Checkout() {
     }
   }
 
-  if (isCreatingOrder) {
+  if (isFetchingCheckoutInfo || isCreatingOrder) {
     return <Loader isLoading={true} />;
   }
 
