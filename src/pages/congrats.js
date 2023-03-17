@@ -58,6 +58,7 @@ export default function OrderCongrats() {
   if (!data) {
     return;
   }
+
   const setUp = () => {
     const mercadopagoAux = new window.MercadoPago(PUBLIC_KEY, {
       locale: "es-UY",
@@ -96,10 +97,6 @@ export default function OrderCongrats() {
       />
     );
   };
-
-  if (!isReady || isFetching) {
-    return <Loader isLoading={!isReady || isFetching} />;
-  }
 
   return (
     <>

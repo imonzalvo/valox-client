@@ -119,7 +119,6 @@ export default function MpCheckout() {
       });
 
     setMercadopago(mercadopagoAux);
-    setIsLoading(false)
   };
 
   const renderMPScript = () => {

@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect} from "react";
+import { useRouter } from "next/router";
 import "@/styles/globals.css";
 import {
   Hydrate,
@@ -12,6 +13,7 @@ import { config } from "../lib/react-query-config";
 import { CartProvider } from "../providers/Cart";
 import GlobalStyles from "./../styles/GlobalStyles";
 import Header from "@/components/header/Header";
+import Loader from "@/components/common/Loader";
 
 const GlobalContainer = tw.div`flex flex-1 justify-center md:w-full 
                                 sm:w-full lg:w-full px-8 tablet:px-4 bg-white`;
@@ -20,6 +22,21 @@ const whatsAppNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER;
 
 export default function App({ Component, pageProps }) {
   const [queryClient] = useState(() => new QueryClient(config));
+  const [pageLoading, setPageLoading] = useState(false);
+
+  const router = useRouter();
+  useEffect(() => {
+    const handleStart = () => {
+      setPageLoading(true);
+    };
+    const handleComplete = () => {
+      setPageLoading(false);
+    };
+
+    router.events.on("routeChangeStart", handleStart);
+    router.events.on("routeChangeComplete", handleComplete);
+    router.events.on("routeChangeError", handleComplete);
+  }, [router, setPageLoading]);
 
   return (
     <CartProvider>
@@ -28,7 +45,7 @@ export default function App({ Component, pageProps }) {
           <GlobalStyles />
           <Header />
           <GlobalContainer>
-            <Component {...pageProps} />
+            {!pageLoading ? <Component {...pageProps} /> : <Loader isLoading={true} />}
           </GlobalContainer>
           {!!whatsAppNumber && (
             <div style={{ position: "absolute" }}>

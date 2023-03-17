@@ -126,8 +126,8 @@ export default function Checkout() {
     }
   }
 
-  if (isFetchingCheckoutInfo || isCreatingOrder) {
-    return <Loader isLoading={isFetchingCheckoutInfo || isCreatingOrder} />;
+  if (isCreatingOrder) {
+    return <Loader isLoading={true} />;
   }
 
   return (

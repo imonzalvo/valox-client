@@ -105,10 +105,6 @@ export default function Product() {
     router.push(`/checkout?product=${product.id}`);
   };
 
-  if (isFetching || !product) {
-    <Loader isLoading={isFetching} />;
-  }
-
   function increment() {
     updateNumberOfItems(numberOfitems + 1);
   }
