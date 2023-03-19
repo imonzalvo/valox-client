@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 import tw from "twin.macro";
 
@@ -11,12 +12,12 @@ const Paragraph = tw.p`my-5 lg:my-8 text-sm lg:text-base font-medium text-gray-6
 
 const IllustrationContainer = tw.div`flex justify-center md:justify-end items-center relative max-w-3xl lg:max-w-none`;
 
-export default ({
+export default function Hero({
   heading,
   description,
   imageSrc = DesignIllustration,
   imageCss = null,
-}) => {
+}) {
   return (
     <>
       <Container>
@@ -27,7 +28,7 @@ export default ({
           </LeftColumn>
           <RightColumn>
             <IllustrationContainer>
-              <img css={imageCss} src={imageSrc} alt="Hero" />
+              <Image className="z-10" css={imageCss} src={imageSrc} alt="Hero" width={"700"} height={"700"}/>
             </IllustrationContainer>
           </RightColumn>
         </TwoColumn>

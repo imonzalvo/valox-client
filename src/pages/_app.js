@@ -12,9 +12,8 @@ import { FloatingWhatsApp } from "react-floating-whatsapp";
 import { config } from "../lib/react-query-config";
 import { CartProvider } from "../providers/Cart";
 import GlobalStyles from "./../styles/GlobalStyles";
-import Header from "@/components/header/Header";
 import Loader from "@/components/common/Loader";
-import Footer from "@/layout/footer";
+import Layout from "@/components/layout";
 
 const GlobalContainer = tw.div`flex flex-1 justify-center md:w-full 
                                 sm:w-full lg:w-full px-8 tablet:px-4 bg-white`;
@@ -44,15 +43,15 @@ export default function App({ Component, pageProps }) {
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
           <GlobalStyles />
-          <Header />
-          <GlobalContainer>
-            {!pageLoading ? (
-              <Component {...pageProps} />
-            ) : (
-              <Loader isLoading={true} />
-            )}
-          </GlobalContainer>
-          <Footer />
+          <Layout>
+            <GlobalContainer>
+              {!pageLoading ? (
+                <Component {...pageProps} />
+              ) : (
+                <Loader isLoading={true} />
+              )}
+            </GlobalContainer>
+          </Layout>
           {!!whatsAppNumber && (
             <div style={{ position: "absolute" }}>
               <FloatingWhatsApp

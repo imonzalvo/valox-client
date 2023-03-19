@@ -49,7 +49,7 @@ export default function Index() {
     });
 
     return tabsKeys;
-  }, [homeInfo])
+  }, [homeInfo]);
 
   const isLocal =
     homeInfo.company.configurations.image.sizes["tablet"].url.includes(
@@ -61,7 +61,7 @@ export default function Index() {
   const landingImageUrl = `${isLocal ? "" : process.env.NEXT_PUBLIC_API_URL}${
     homeInfo.company.configurations.image.sizes["tablet"].url
   }`;
-  
+
   return (
     <Container>
       <Head>
@@ -104,4 +104,4 @@ export default function Index() {
       </AnimationRevealPage>
     </Container>
   );
-};
+}
