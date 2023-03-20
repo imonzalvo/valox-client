@@ -4,6 +4,7 @@ import Header from "./header";
 
 export default function Layout({ children }) {
   const { data: companyInfo } = useHomeInfo();
+  
   return (
     <>
       <Header companyInfo={companyInfo} />

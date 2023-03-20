@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import CategoriesMenu from "./categoriesMenu";
 
 const NAV_ITEMS = [
@@ -18,23 +19,18 @@ const NAV_ITEMS = [
   },
 ];
 
-export default function Nav({
-  open,
-  setOpen,
-  companyInfo,
-  menuOpen,
-}) {
+export default function Nav({ open, setOpen, companyInfo, menuOpen }) {
+  const categoriesTrees = companyInfo?.categoriesTrees;
   return (
     <nav
       className={`
       ${menuOpen ? "flex" : "small:hidden"}
       flex-col flex-grow pb-4 md:pb-0 md:flex md:justify-start md:flex-row `}
-    >{
-    }
+    >
       <CategoriesMenu
         open={open}
         setOpen={setOpen}
-        categoriesTrees={companyInfo.categoriesTrees}
+        categoriesTrees={categoriesTrees}
       />
       {NAV_ITEMS.map((navItem) => (
         <a
