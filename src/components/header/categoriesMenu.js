@@ -1,7 +1,7 @@
 import { Transition } from "@headlessui/react";
 import ModalMenu from "./modalMenu";
 
-export default function CategoriesMenu({ open, setOpen }) {
+export default function CategoriesMenu({ open, setOpen, categoriesTrees }) {
   return (
     <div
       onMouseEnter={() => setOpen(true)}
@@ -34,7 +34,7 @@ export default function CategoriesMenu({ open, setOpen }) {
         leaveFrom="transform opacity-100"
         leaveTo="transform opacity-0"
       >
-        <ModalMenu />
+        <ModalMenu categoriesTrees={categoriesTrees} />
       </Transition>
     </div>
   );

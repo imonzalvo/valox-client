@@ -24,7 +24,7 @@ export default function Header({ companyInfo }) {
               <div className="flex flex-row items-center justify-between p-4">
                 <a
                   href="#"
-                  className="text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline"
+                  className="text-lg font-semibold tracking-widest text-secondary-700 uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline"
                 >
                   {process.env.NEXT_PUBLIC_BUSINESS_TITLE}
                 </a>
@@ -58,7 +58,6 @@ export default function Header({ companyInfo }) {
                 open={open}
                 setOpen={setOpen}
                 menuOpen={menuOpen}
-                setMenuOpen={setMenuOpen}
                 companyInfo={companyInfo}
               ></Nav>
               <div></div>

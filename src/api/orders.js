@@ -3,10 +3,11 @@ import axios from "axios";
 const mapProducts = (products) => {
   return products.map((product) => {
     return {
-      id: product.productId,
+      id: product.product.id,
       quantity: product.quantity,
       price: product.unitPrice,
       title: product.title,
+      image: product.product?.images[0]?.image.sizes?.thumbnail.url
     };
   });
 };
@@ -18,9 +19,10 @@ export const getOrderById = async (id) => {
       Accept: "application/json",
     },
     method: "get",
-    url: `${process.env.NEXT_PUBLIC_API_URL}/api/orders/${id}?depth=3`,
+    url: `${process.env.NEXT_PUBLIC_API_URL}/api/orders/${id}?depth=4`,
   });
 
+  // console.log("data prod", data.products[0].product.images[0])
   return {
     id: data.id,
     createdAt: data.createdAt,

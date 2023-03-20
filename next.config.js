@@ -4,7 +4,7 @@ const nextConfig = {
   poweredByHeader: false,
   images: {
     formats: ['image/avif', 'image/webp'],
-    domains: ['fragrant-sunset-934.fly.dev', 'localhost:3000'],
+    domains: ['fragrant-sunset-934.fly.dev', 'localhost'],
     remotePatterns: [
       {
         protocol: 'https',

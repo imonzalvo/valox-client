@@ -9,15 +9,15 @@ import { useOrder } from "@/hooks/useOrder";
 import * as api from "../api/orders";
 import Loader from "@/components/common/Loader";
 import OrderSummary from "@/components/orderSummary";
+import CheckoutSummary from "@/components/checkoutSummary";
 
-const OuterContainer = tw.div`mt-8 flex justify-between flex-1 max-w-screen-xl px-2
-sm:flex-col md:flex-col lg:flex-col xl:flex-col 2xl:flex-col tablet:flex-col tablet:items-center
-tablet:mb-20 items-center
+const OuterContainer = tw.div`mt-8 flex justify-between flex-1 max-w-screen-xl
+sm:flex-col md:flex-col lg:flex-col xl:flex-col 2xl:flex-col tablet:flex-col tablet:items-center items-center
 `;
 
-const Container = tw.div`flex justify-between flex-1 max-w-screen-xl px-2
+const Container = tw.div`flex justify-between flex-1 max-w-screen-xl
 sm:flex-col md:flex-col lg:flex-row xl:flex-row 2xl:flex-row tablet:flex-col tablet:items-center
-tablet:mb-20 w-full
+w-full
 `;
 
 const HalfContainer = tw.div`flex justify-between flex-1`;
@@ -110,11 +110,15 @@ export default function OrderCongrats() {
             <OrderSummary order={data} />
           </LeftContainer>
           <RightContainer>
-            <CartSummary
+            {/* <CartSummary
               products={data.products}
               shippingOption={data.details.shippingOption}
               paymentMethod={data.details.paymentMethod}
-            ></CartSummary>
+            ></CartSummary> */}
+            <CheckoutSummary
+              products={data.products}
+              details={data.details}
+            />
           </RightContainer>
         </Container>
       </OuterContainer>
