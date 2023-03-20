@@ -2,9 +2,7 @@ const colors = require("tailwindcss/colors");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       height: {
@@ -14,18 +12,18 @@ module.exports = {
         ".5": ".125rem",
       },
       height: {
-        "120": "30rem",
-        "121": "500px"
+        120: "30rem",
+        121: "500px",
       },
       backgroundColor: {
-        'light': '#f5f5f5',
-        'light-200': '#f0f0f0',
-        'light-300': '#e8e8e8'
-      }
+        light: "#f5f5f5",
+        "light-200": "#f0f0f0",
+        "light-300": "#e8e8e8",
+      },
     },
     screens: {
-      small: {'max': '768px'},
-      tablet: {'max': '1024px'},
+      small: { max: "768px" },
+      tablet: { max: "1024px" },
       sm: "640px",
       md: "768px",
       lg: "1024px",
@@ -369,7 +367,7 @@ module.exports = {
       "11/12": "91.666667%",
       full: "100%",
       screen: "100vh",
-      fit: "fit-content"
+      fit: "fit-content",
     }),
     inset: {
       0: "0",
@@ -426,7 +424,7 @@ module.exports = {
       "3xl": "48rem",
       "4xl": "56rem",
       "5xl": "64rem",
-      "6xl": "72rem",
+      "6xl": "78rem",
       full: "100%",
       ...theme("spacing"),
       ...breakpoints(theme("screens")),
@@ -523,7 +521,7 @@ module.exports = {
       "11/12": "91.666667%",
       full: "100%",
       screen: "100vw",
-      fit: "fit-content"
+      fit: "fit-content",
     }),
     zIndex: {
       auto: "auto",
@@ -808,5 +806,8 @@ module.exports = {
     transitionTimingFunction: ["responsive"],
     transitionDuration: ["responsive"],
   },
-  plugins: [],
-}
+  plugins: [
+    require("@tailwindcss/aspect-ratio"),
+    require("@tailwindcss/forms"),
+  ],
+};

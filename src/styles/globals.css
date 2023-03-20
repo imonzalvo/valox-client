@@ -3,6 +3,12 @@
 @tailwind utilities;
 @import "~react-image-gallery/styles/css/image-gallery.css";
 
+:root, body, #__next {
+  margin: 0;
+  padding:0;
+  width: 100%;
+ }
+ 
 /* :root {
   --max-width: 1100px;
   --border-radius: 12px;

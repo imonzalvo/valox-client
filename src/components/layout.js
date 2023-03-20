@@ -4,11 +4,11 @@ import Header from "./header";
 
 export default function Layout({ children }) {
   const { data: companyInfo } = useHomeInfo();
-  
+
   return (
     <>
       <Header companyInfo={companyInfo} />
-      <main>{children}</main>
+      <main className="min-h-[calc(100vh-197px-64px)]">{children}</main>
       <Footer />
     </>
   );

@@ -16,7 +16,7 @@ import Loader from "@/components/common/Loader";
 import Layout from "@/components/layout";
 
 const GlobalContainer = tw.div`flex flex-1 justify-center md:w-full 
-                                sm:w-full lg:w-full px-8 tablet:px-4 bg-white`;
+                                sm:w-full lg:w-full px-8 tablet:px-4 bg-white min-h-full`;
 
 const whatsAppNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER;
 
@@ -46,7 +46,7 @@ export default function App({ Component, pageProps }) {
           <Layout>
             <GlobalContainer>
               {!pageLoading ? (
-                <Component {...pageProps} />
+                  <Component {...pageProps} />
               ) : (
                 <Loader isLoading={true} />
               )}
