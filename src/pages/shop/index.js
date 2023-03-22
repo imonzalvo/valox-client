@@ -8,10 +8,10 @@ import { useHomeInfo } from "@/hooks/useHomeInfo";
 import ShopSidebar from "@/components/shop/topBar";
 import Sidebar from "@/components/shop/sidebar";
 import MoblileModalFilters from "@/components/shop/mobileModalFilters";
-import ProductList from "@/components/shop/ProductList";
 import { useCategory } from "@/hooks/useCategory";
 import Loader from "@/components/common/Loader";
 import Head from "next/head";
+import ProductList from "../../components/shop/productList";
 
 export const getServerSideProps = async () => {
   const queryClient = new QueryClient();
