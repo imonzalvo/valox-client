@@ -28,11 +28,19 @@ export default function Hero({
           </LeftColumn>
           <RightColumn>
             <IllustrationContainer>
-              <Image className="z-10" css={imageCss} src={imageSrc} alt="Hero" width={"700"} height={"700"}/>
+              <Image
+                className="z-10"
+                css={imageCss}
+                priority
+                src={imageSrc}
+                alt="Hero"
+                width={"700"}
+                height={"700"}
+              />
             </IllustrationContainer>
           </RightColumn>
         </TwoColumn>
       </Container>
     </>
   );
-};
+}

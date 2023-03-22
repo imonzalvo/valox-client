@@ -1,6 +1,6 @@
 import tw from "twin.macro";
 
-import { isOrderStatusError } from "@/utils";
+import { isOrderStatusError } from "@/helpers/utils";
 
 const OrderContainer = tw.div`w-full`;
 const Title = tw.h4``;

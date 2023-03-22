@@ -3,6 +3,7 @@ import { useState } from "react";
 
 import Nav from "./nav";
 import useScrollDirection from "../helpers/useScrollDirection";
+import Link from "next/link";
 
 export default function Header({ companyInfo }) {
   const scrollDirection = useScrollDirection();
@@ -22,16 +23,17 @@ export default function Header({ companyInfo }) {
           <div className="w-full text-gray-700 bg-white dark-mode:text-gray-200 dark-mode:bg-gray-800">
             <div className="flex flex-col max-w-screen-xl px-4 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-8">
               <div className="flex flex-row items-center justify-between p-4">
-                <a
-                  href="#"
-                  className="text-lg font-semibold tracking-widest text-secondary-700 uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline"
+                <Link
+                  href="/"
+                  className="text-lg font-semibold tracking-widest text-secondary-700 uppercase rounded-lg dark-mode:text-white focus:outline-none outline:none"
                 >
                   {process.env.NEXT_PUBLIC_BUSINESS_TITLE}
-                </a>
+                </Link>
                 <button
                   className="outline:none rounded-lg md:hidden focus:outline-none"
                   onClick={() => {
-                    setMenuOpen((prevState) => !prevState)}}
+                    setMenuOpen((prevState) => !prevState);
+                  }}
                 >
                   <svg
                     fill="currentColor"

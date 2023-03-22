@@ -5,6 +5,6 @@ export const useCategory = (id) => {
   return useQuery({
     queryKey: ["category", id],
     queryFn: () => api.getCategoryById(id),
-    enabled: id != "todos",
+    enabled: !!id && (id != "todos"),
   });
 };
