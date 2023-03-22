@@ -4,11 +4,11 @@ import { useMemo } from "react";
 
 export default function ProductCard({ id, title, price, imageUrl }) {
   const formatedUrl = useMemo(() => {
-    imageUrl && imageUrl.includes("localhost")
-      ? `${sizes.thumbnail.imageUrl}`
+    return imageUrl && imageUrl.includes("localhost")
+      ? `${imageUrl}`
       : `${process.env.NEXT_PUBLIC_API_URL}${imageUrl}`;
   }, [imageUrl]);
-  
+
   return (
     <Link
       href={`/products/${id}`}
@@ -20,7 +20,7 @@ export default function ProductCard({ id, title, price, imageUrl }) {
         <Image
           alt={title}
           className="w-[230px] h-[230px] rounded-2xl object-cover"
-          src={formatedUrl()}
+          src={formatedUrl}
           width={220}
           height={220}
         />
