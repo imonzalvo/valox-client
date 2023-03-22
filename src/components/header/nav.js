@@ -19,7 +19,7 @@ const NAV_ITEMS = [
   },
 ];
 
-export default function Nav({ open, setOpen, companyInfo, menuOpen }) {
+export default function Nav({ open, setOpen, companyInfo, menuOpen, closeModal }) {
   const categoriesTrees = companyInfo?.categoriesTrees;
   return (
     <nav
@@ -31,6 +31,7 @@ export default function Nav({ open, setOpen, companyInfo, menuOpen }) {
         open={open}
         setOpen={setOpen}
         categoriesTrees={categoriesTrees}
+        closeModal={closeModal}
       />
       {NAV_ITEMS.map((navItem) => (
         <a

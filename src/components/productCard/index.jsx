@@ -1,8 +1,14 @@
 import Image from "next/image";
+import Link from "next/link";
 
-export default function ProductCard({ title, price, imageUrl }) {
+export default function ProductCard({ id, title, price, imageUrl }) {
   return (
-    <div className=" min-w-[200px] bg-white shadow-md rounded-3xl p-2 mx-3 my-3 cursor-pointer">
+    <Link
+      href={`/products/${id}`}
+      className=" min-w-[200px] bg-white shadow-md rounded-3xl p-2 mx-3 my-3 cursor-pointer"
+    >
+      {console.log("prod2", id)}
+
       <div className="overflow-x-hidden rounded-2xl relative">
         <Image
           alt={title}
@@ -53,6 +59,6 @@ export default function ProductCard({ title, price, imageUrl }) {
           </svg>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

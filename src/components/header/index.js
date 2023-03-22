@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 import Nav from "./nav";
 import useScrollDirection from "../helpers/useScrollDirection";
@@ -10,6 +10,10 @@ export default function Header({ companyInfo }) {
 
   const [open, setOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const closeModal = useCallback(() => {
+    setMenuOpen(false);
+  }, []);
   return (
     <header
       className={`sticky ${
@@ -59,6 +63,7 @@ export default function Header({ companyInfo }) {
               <Nav
                 open={open}
                 setOpen={setOpen}
+                closeModal={closeModal}
                 menuOpen={menuOpen}
                 companyInfo={companyInfo}
               ></Nav>

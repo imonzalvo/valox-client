@@ -57,7 +57,6 @@ export default function Shop() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const { data: homeInfo } = useHomeInfo();
   const { data: categoryInfo } = useCategory(categoryId);
-  console.log("home", homeInfo);
 
   const formattedCategories = useMemo(() => {
     return mapCategories(homeInfo.categoriesTrees);
@@ -104,7 +103,7 @@ export default function Shop() {
                 categories={formattedCategories}
                 selectedCategory={categoryId}
               />
-              {<ProductList products={products} />}
+              <ProductList products={products} />
             </div>
           </section>
         </main>

@@ -20,7 +20,7 @@ md:w-8 md:h-8 md:pt-2 md:text-xs
 text-black
 m-0 border-t border-b text-center`;
 
-const Quantity = tw.div`pr-2 text-base text-black`;
+const Quantity = tw.div`pr-2 text-base text-black font-semibold`;
 
 export default function QuantityPicker({
   increment,
@@ -30,7 +30,7 @@ export default function QuantityPicker({
 }) {
   return (
     <Container>
-      {!hideQuantityLabel && <Quantity>CANTIDAD</Quantity>}
+      {!hideQuantityLabel && <Quantity>Cantidad</Quantity>}
       <ButtonPlus onClick={decrement}>-</ButtonPlus>
       <NumberOfItems>{numberOfitems}</NumberOfItems>
       <ButtonMinus onClick={increment}>+</ButtonMinus>

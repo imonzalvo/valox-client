@@ -10,9 +10,6 @@ const subPriceRow = (title, price) => {
   );
 };
 export default function CheckoutSummary({ products, details }) {
-  console.log("products", products);
-  console.log("shippingOption", details.shippingOption);
-  console.log("paymentMethod", details.paymentMethod);
   const subtotal = useMemo(() => {
     return details.totalAmount -
       details.shippingOption.cost -

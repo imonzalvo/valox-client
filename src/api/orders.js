@@ -22,7 +22,6 @@ export const getOrderById = async (id) => {
     url: `${process.env.NEXT_PUBLIC_API_URL}/api/orders/${id}?depth=4`,
   });
 
-  // console.log("data prod", data.products[0].product.images[0])
   return {
     id: data.id,
     createdAt: data.createdAt,

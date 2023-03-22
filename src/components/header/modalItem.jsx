@@ -1,8 +1,18 @@
 import Link from "next/link";
 
-export default function ModalItem({ title, description, url }) {
+export default function ModalItem({
+  title,
+  description,
+  url,
+  setOpen,
+  closeModal,
+}) {
   return (
     <Link
+      onClick={() => {
+        setOpen(false);
+        closeModal();
+      }}
       href={url}
       className="flex flex row items-center rounded-lg bg-transparent p-2 dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none"
     >

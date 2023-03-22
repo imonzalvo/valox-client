@@ -8,7 +8,7 @@ export default function Layout({ children }) {
   return (
     <>
       <Header companyInfo={companyInfo} />
-      <main className="min-h-[calc(100vh-197px-64px)]">{children}</main>
+      <main className="min-h-[calc(100vh-197px-64px)] w-full">{children}</main>
       <Footer />
     </>
   );

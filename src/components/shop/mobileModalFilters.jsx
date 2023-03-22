@@ -52,8 +52,6 @@ export default function MoblileModalFilters({
               </div>
 
               {categories.map((category) => {
-                console.log("hola?", category);
-
                 const defaultOpen = category.children.some(
                   (child) => child.id == selectedCategory
                 );

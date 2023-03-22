@@ -16,8 +16,6 @@ export default function Sidebar({ categories, selectedCategory }) {
       </ul> */}
 
       {categories.map((category) => {
-        console.log("hola?", category);
-
         const defaultOpen = category.children.some(
           (child) => child.id == selectedCategory
         );
