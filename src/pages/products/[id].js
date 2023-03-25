@@ -103,7 +103,7 @@ export default function Product() {
     //   },
     // });
 
-    router.push(`/checkout?product=${product.id}`);
+    router.push(`/checkout/orderInfo?product=${product.id}`);
   };
 
   function increment() {

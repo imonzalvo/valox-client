@@ -5,9 +5,11 @@ import Script from "next/script";
 import { useRouter } from "next/router";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 
-import * as api from "../api/orders";
+import * as api from "../../api/orders";
 import { useOrder } from "@/hooks/useOrder";
 import Loader from "@/components/common/Loader";
+import Layout from "@/components/layout";
+import CheckoutLayout from "@/components/checkoutLayout";
 // import CartSummary from "../components/checkout/cartSummary";
 
 const Container = tw.div`flex justify-center px-10 flex-1 mt-4 md:flex-row lg:flex-row xl:flex-row 2xl:flex-row small:flex-col-reverse small:items-center`;
@@ -48,7 +50,7 @@ export default function MpCheckout() {
   }
 
   function goToCongrats(orderId) {
-    push(`/congrats?orderId=${orderId}`);
+    push(`/checkout/congrats?orderId=${orderId}`);
   }
 
   const buildTransaction = (cardFormData) => ({
@@ -65,7 +67,7 @@ export default function MpCheckout() {
     },
     installments: 6,
     transactionAmount: data.details.totalAmount,
-    orderId: orderId
+    orderId: orderId,
   });
 
   const onFormSubmit = (cardFormData) =>
@@ -147,3 +149,11 @@ export default function MpCheckout() {
     </>
   );
 }
+
+MpCheckout.getLayout = function getLayout(page) {
+  return (
+    <Layout>
+      <CheckoutLayout step={3}>{page}</CheckoutLayout>
+    </Layout>
+  );
+};

@@ -38,20 +38,28 @@ export default function App({ Component, pageProps }) {
     router.events.on("routeChangeError", handleComplete);
   }, [router, setPageLoading]);
 
+  const getLayout = Component.getLayout || ((page) => page);
+
+  const renderComponent = () => (
+    <GlobalContainer>
+      {!pageLoading ? (
+        <Component {...pageProps} />
+      ) : (
+        <Loader isLoading={true} />
+      )}
+    </GlobalContainer>
+  );
+
   return (
     <CartProvider>
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
           <GlobalStyles />
-          <Layout>
-            <GlobalContainer>
-              {!pageLoading ? (
-                  <Component {...pageProps} />
-              ) : (
-                <Loader isLoading={true} />
-              )}
-            </GlobalContainer>
-          </Layout>
+          {Component.getLayout ? (
+            getLayout(renderComponent())
+          ) : (
+            <Layout>{renderComponent()}</Layout>
+          )}
           {!!whatsAppNumber && (
             <div style={{ position: "absolute" }}>
               <FloatingWhatsApp

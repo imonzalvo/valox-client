@@ -53,14 +53,14 @@ const CardPrice = tw.p`mt-4 text-xl font-bold`;
 //   ${tw`pointer-events-none -z-20 absolute left-0 bottom-0 h-80 w-80 opacity-15 transform -translate-x-2/3 text-primary-500`}
 // `;
 
-export default ({
+export default function TabGrid({
   heading = "Checkout the Menu",
   tabs = {},
   products,
   activeTab,
   setActiveTab,
   isFetching,
-}) => {
+}) {
   const router = useRouter();
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
@@ -159,4 +159,4 @@ export default ({
       </InnerContainer>
     </Container>
   );
-};
+}

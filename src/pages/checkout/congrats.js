@@ -4,12 +4,14 @@ import Script from "next/script";
 import { useRouter } from "next/router";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 
-import CartSummary from "../components/checkout/cartSummary/index";
+// import CartSummary from "../../components/checkout/cartSummary/index";
 import { useOrder } from "@/hooks/useOrder";
-import * as api from "../api/orders";
+import * as api from "../../api/orders";
 import Loader from "@/components/common/Loader";
 import OrderSummary from "@/components/orderSummary";
 import CheckoutSummary from "@/components/checkoutSummary";
+import Layout from "@/components/layout";
+import CheckoutLayout from "@/components/checkoutLayout";
 
 const OuterContainer = tw.div`mt-8 flex justify-between flex-1 max-w-screen-xl
 sm:flex-col md:flex-col lg:flex-col xl:flex-col 2xl:flex-col tablet:flex-col tablet:items-center items-center
@@ -115,10 +117,7 @@ export default function OrderCongrats() {
               shippingOption={data.details.shippingOption}
               paymentMethod={data.details.paymentMethod}
             ></CartSummary> */}
-            <CheckoutSummary
-              products={data.products}
-              details={data.details}
-            />
+            <CheckoutSummary products={data.products} details={data.details} />
           </RightContainer>
         </Container>
       </OuterContainer>

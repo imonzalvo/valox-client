@@ -5,12 +5,14 @@ import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 
-import * as api from "../api/orders";
+import * as api from "../../api/orders";
 import { useCheckoutInfo } from "@/hooks/useCheckoutInfo";
 
-import CartSummary from "../components/checkout/cartSummary/index";
-import UserDataForm from "../components/checkout/UserDataForm";
+import CartSummary from "../../components/checkout/cartSummary/index";
+import UserDataForm from "../../components/checkout/UserDataForm";
 import Loader from "@/components/common/Loader";
+import Layout from "@/components/layout";
+import CheckoutLayout from "@/components/checkoutLayout";
 
 const Container = tw.div`flex mt-12 justify-between flex-1 font-sans max-w-screen-xl px-2
 sm:flex-col md:flex-col lg:flex-row xl:flex-row 2xl:flex-row tablet:flex-col tablet:items-center
@@ -25,7 +27,7 @@ const RightContainer = tw(
 
 const FormTitle = tw.h1`font-bold`;
 
-export default function Checkout() {
+export default function OrderInfo() {
   const {
     query: { product },
     push,
@@ -120,9 +122,9 @@ export default function Checkout() {
   function goToCongrats(orderId) {
     const paymentMethod = getSelectedPaymentMethod();
     if (paymentMethod.paymentMethod.mercadopago) {
-      push(`/mpCheckout?orderId=${orderId}`);
+      push(`/checkout/payment?orderId=${orderId}`);
     } else {
-      push(`/congrats?orderId=${orderId}`);
+      push(`/checkout/congrats?orderId=${orderId}`);
     }
   }
 
@@ -166,3 +168,11 @@ export default function Checkout() {
     </Container>
   );
 }
+
+OrderInfo.getLayout = function getLayout(page) {
+  return (
+    <Layout>
+      <CheckoutLayout step={1}>{page}</CheckoutLayout>
+    </Layout>
+  );
+};
