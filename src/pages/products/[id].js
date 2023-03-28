@@ -27,7 +27,7 @@ const ImageContainer = styled.div`
     height: 500px;
   }
 `;
-const ImageContainers = tw.div`w-full md:w-1/2 h-120 flex-1 mb-32`;
+const ImageContainers = tw.div`w-full md:w-1/2 h-120 flex-1 mb-32 mr-8`;
 const QuantityPickerContainer = tw.div`my-6`;
 const StyledButton = tw.button`mt-8 cursor-pointer w-full text-sm font-bold tracking-wider bg-transparent 
                               hover:bg-black text-black font-semibold 

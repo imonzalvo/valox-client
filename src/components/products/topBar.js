@@ -46,7 +46,7 @@ export default function Topbar({productTitle}) {
         </li>
         <li>
           <a
-            class="text-sm font-medium text-indigo-500 hover:text-indigo-600"
+            class="text-sm font-medium text-secondary-400 hover:text-secondary-600"
             href="#"
           >
             {productTitle}
