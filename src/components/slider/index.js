@@ -69,21 +69,13 @@ export default function Slider({
               <div className="embla__slide" key={chunkindex}>
                 <div className="flex flex-row justify-center">
                   {productChunk.map((product) => {
-                    const isLocal =
-                      product.images[0].image.sizes["thumbnail"].url.includes(
-                        "localhost"
-                      );
-
-                    const productImage = `${
-                      isLocal ? "" : process.env.NEXT_PUBLIC_API_URL
-                    }${product.images[0].image.url}`;
                     return (
                       <ProductCard
                         key={product.id}
                         id={product.id}
                         title={product.title}
                         price={product.price}
-                        imageUrl={productImage}
+                        imageUrl={product.images[0].image.url}
                         fullWidthProduct={fullWidthProducts}
                       />
                     );
