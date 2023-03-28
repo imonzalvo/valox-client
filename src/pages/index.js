@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import Head from "next/head";
 import tw from "twin.macro";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
@@ -9,7 +9,8 @@ import { useCategory } from "@/hooks/useCategory";
 
 import AnimationRevealPage from "@/components/AnimationRevealPage";
 import Hero from "@/components/Hero";
-import TabGrid from "@/components/TabGrid";
+import Slider from "@/components/slider";
+import { useWidth } from "@/hooks/helpers/useWidth";
 
 const Container = tw.div`flex flex-1 w-full justify-center`;
 const HighlightedText = tw.div`bg-primary-500 text-gray-100 px-4 inline-block`;
@@ -30,12 +31,11 @@ export const getServerSideProps = async () => {
 
 export default function Index() {
   const [activeTab, setActiveTab] = useState({ name: "Todos", id: "todos" });
+  const width = useWidth();
 
   const { data: homeInfo } = useHomeInfo();
   const { data: category, isFetching: isFetchingCategoryProducts } =
     useCategory(activeTab.id);
-
-  const imageCss = tw`rounded-4xl`;
 
   const tabs = useMemo(() => {
     let tabsKeys = {};
@@ -50,6 +50,28 @@ export default function Index() {
 
     return tabsKeys;
   }, [homeInfo]);
+
+  const sliderProductsChunkAmount = useMemo(() => {
+    if (width < 768) {
+      return 1;
+    }
+    if (width < 1024) {
+      return 2;
+    }
+    if (width < 1440) {
+      return 3;
+    }
+
+    return 4;
+  }, [width]);
+
+  const isMobile = useMemo(() => {
+    return width < 768;
+  }, [width]);
+
+  if (width == 0) {
+    return;
+  }
 
   const isLocal =
     homeInfo.company.configurations.image.sizes["tablet"].url.includes(
@@ -80,26 +102,20 @@ export default function Index() {
           }
           description={description}
           imageSrc={landingImageUrl}
-          imageCss={imageCss}
           imageDecoratorBlob={true}
           primaryButtonText="Order Now"
           watchVideoButtonText="Meet The Chefs"
         />
-        <TabGrid
+        <Slider
           heading={
             <>
               Conocé nuestros <HighlightedText>productos</HighlightedText>
             </>
           }
-          tabs={tabs}
-          products={
-            activeTab.id == "todos" || !category
-              ? homeInfo.products
-              : category.products
-          }
-          activeTab={activeTab}
-          setActiveTab={(tab) => setActiveTab(tab)}
-          isFetching={isFetchingCategoryProducts}
+          products={homeInfo.products}
+          showArrows={!isMobile}
+          productsByChunk={sliderProductsChunkAmount}
+          fullWidthProducts={isMobile}
         />
       </AnimationRevealPage>
     </Container>

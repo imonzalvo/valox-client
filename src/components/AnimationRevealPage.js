@@ -15,7 +15,7 @@ function useInView({ once = true, margin = "-30px 0px 0px 0px" } = {}) {
   return [ref, isInView];
 }
 
-const StyledDiv = tw.div`font-display min-h-screen text-secondary-500 overflow-hidden`;
+const StyledDiv = tw.div`font-display min-h-screen text-secondary overflow-hidden`;
 function AnimationReveal({ disabled, children }) {
   if (disabled) {
     return <>{children}</>;

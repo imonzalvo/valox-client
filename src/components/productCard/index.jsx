@@ -2,24 +2,31 @@ import Image from "next/image";
 import Link from "next/link";
 import { useMemo } from "react";
 
-export default function ProductCard({ id, title, price, imageUrl }) {
+export default function ProductCard({
+  id,
+  title,
+  price,
+  imageUrl,
+  fullWidthProduct,
+}) {
   const formatedUrl = useMemo(() => {
     return imageUrl && imageUrl.includes("localhost")
       ? `${imageUrl}`
       : `${process.env.NEXT_PUBLIC_API_URL}${imageUrl}`;
   }, [imageUrl]);
-
   return (
     <Link
       href={`/products/${id}`}
-      className=" min-w-[200px] bg-white shadow-md rounded-3xl p-2 mx-3 my-3 cursor-pointer"
+      className={`"min-w-[200px] bg-white shadow-md rounded-3xl p-2 mx-3 my-3 cursor-pointer" ${
+        fullWidthProduct ? "w-full" : ""
+      }`}
     >
-      {console.log("prod2", id)}
-
       <div className="overflow-x-hidden rounded-2xl relative">
         <Image
           alt={title}
-          className="w-[230px] h-[230px] rounded-2xl object-cover"
+          className={`rounded-2xl object-cover ${
+            fullWidthProduct ? "w-full h-[400px]" : "w-[230px] h-[230px]"
+          }`}
           src={formatedUrl}
           width={220}
           height={220}

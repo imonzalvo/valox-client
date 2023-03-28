@@ -11,13 +11,14 @@ const Heading = tw.h1`font-black text-3xl md:text-5xl leading-snug max-w-3xl`;
 const Paragraph = tw.p`my-5 lg:my-8 text-sm lg:text-base font-medium text-gray-600 max-w-lg mx-auto lg:mx-0`;
 
 const IllustrationContainer = tw.div`flex justify-center md:justify-end items-center relative max-w-3xl lg:max-w-none`;
+const imageCss = tw`rounded-4xl`;
 
 export default function Hero({
   heading,
   description,
   imageSrc = DesignIllustration,
-  imageCss = null,
 }) {
+  
   return (
     <>
       <Container>

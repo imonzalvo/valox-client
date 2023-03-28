@@ -1,7 +1,6 @@
 import Step from "./step";
 
 export default function Stepper({ step }) {
-    console.log("hola", step)
   return (
     <ul class="relative m-0 flex list-none justify-between overflow-hidden p-0 transition-[height] duration-200 ease-in-out">
       <Step

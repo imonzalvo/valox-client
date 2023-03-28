@@ -6,12 +6,12 @@ import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import HashLoader from "react-spinners/HashLoader";
 
-export const SectionHeading = tw.h2`text-4xl sm:text-5xl font-black tracking-wide text-center`;
+export const SectionHeading = tw.h2`text-start text-4xl sm:text-5xl font-black tracking-wide text-center mb-12`;
+const Header = tw(SectionHeading)``;
 
 const Container = tw.div`flex w-full justify-center items-center`;
 const InnerContainer = tw.div`max-w-screen-xl mx-auto py-20 lg:py-24 flex w-full flex-col`;
 const HeaderRow = tw.div`flex justify-between items-center flex-col xl:flex-row`;
-const Header = tw(SectionHeading)``;
 const TabsControl = tw.div`flex flex-wrap bg-gray-200 px-2 py-2 rounded leading-none mt-12 xl:mt-0`;
 
 const TabControl = styled.div`
@@ -19,7 +19,7 @@ const TabControl = styled.div`
   &:hover {
     ${tw`bg-gray-300 text-gray-700`}
   }
-  ${(props) => props.active && tw`bg-primary-500! text-gray-100!`}
+  ${(props) => props.active && tw`bg-primary! text-gray-100!`}
   }
 `;
 const LoaderContainer = tw(
@@ -42,7 +42,7 @@ const CardImageContainer = styled.div`
 `;
 
 const CardText = tw.div`p-4 text-gray-900`;
-const CardTitle = tw.h5`text-lg font-semibold group-hover:text-primary-500`;
+const CardTitle = tw.h5`text-lg font-semibold group-hover:text-primary`;
 const CardContent = tw.p`mt-1 text-sm font-medium text-gray-600`;
 const CardPrice = tw.p`mt-4 text-xl font-bold`;
 
