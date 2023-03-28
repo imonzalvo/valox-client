@@ -1,16 +1,34 @@
 import { Transition } from "@headlessui/react";
 import ModalMenu from "./modalMenu";
 
-export default function CategoriesMenu({ open, setOpen, categoriesTrees, closeModal }) {
+export default function CategoriesMenu({
+  open,
+  setModalOpen,
+  categoriesTrees,
+  closeModal,
+}) {
+  const handleOpen = () => {
+    if (open) {
+      setModalOpen("");
+      closeModal()
+    } else {
+      setModalOpen("categories");
+    }
+  };
+
   return (
     <div
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
+      onMouseEnter={() => setModalOpen("categories")}
+      onMouseLeave={() => setModalOpen("")}
       className="relative"
     >
       <button
-        onClick={() => setOpen(!open)}
-        className="outline:none flex flex-row text-gray-900 bg-gray-200 items-center w-full px-4 py-2 mt-2 text-sm font-semibold text-left bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:focus:bg-gray-600 dark-mode:hover:bg-gray-600 md:w-auto md:inline md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none outline:none"
+        onClick={() => handleOpen()}
+        className={`outline:none flex flex-row text-gray-900 bg-gray-200 
+                    items-center w-full px-4 py-2 mt-2 text-sm font-semibold
+                    text-left bg-white rounded-lg
+                    md:w-auto md:inline md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900
+                    hover:bg-gray-200 focus:bg-gray-200 focus:outline-none outline:none`}
       >
         <span>Categorías</span>
         <svg
@@ -34,7 +52,11 @@ export default function CategoriesMenu({ open, setOpen, categoriesTrees, closeMo
         leaveFrom="transform opacity-100"
         leaveTo="transform opacity-0"
       >
-        <ModalMenu categoriesTrees={categoriesTrees} setOpen={setOpen} closeModal={closeModal} />
+        <ModalMenu
+          categoriesTrees={categoriesTrees}
+          setOpen={() => setModalOpen("categories")}
+          closeModal={closeModal}
+        />
       </Transition>
     </div>
   );

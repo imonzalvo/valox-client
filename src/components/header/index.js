@@ -8,12 +8,12 @@ import Link from "next/link";
 export default function Header({ companyInfo }) {
   const scrollDirection = useScrollDirection();
 
-  const [open, setOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
-
   const closeModal = useCallback(() => {
     setMenuOpen(false);
   }, []);
+
   return (
     <header
       className={`sticky ${
@@ -61,9 +61,9 @@ export default function Header({ companyInfo }) {
                 </button>
               </div>
               <Nav
-                open={open}
-                setOpen={setOpen}
-                closeModal={closeModal}
+                modalOpen={modalOpen}
+                setModalOpen={setModalOpen}
+                closeModal={() => closeModal()}
                 menuOpen={menuOpen}
                 companyInfo={companyInfo}
               ></Nav>

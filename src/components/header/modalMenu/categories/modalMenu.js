@@ -1,5 +1,5 @@
 import { getShopUrlForCategoryId } from "@/helpers/routedHelper";
-import ModalItem from "./modalItem";
+import ModalItem from "../modalItem";
 
 export default function ModalMenu({ categoriesTrees, setOpen, closeModal }) {
   const parentCategories = categoriesTrees.map((categoryTree) => {
