@@ -29,6 +29,7 @@ export default function ProductCard({
           className={`rounded-2xl object-cover ${
             fullWidthProduct ? "w-full h-[400px]" : "w-[230px] h-[230px]"
           }`}
+          priority
           src={formatedUrl}
           width={220}
           height={220}
