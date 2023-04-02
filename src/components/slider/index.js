@@ -10,7 +10,7 @@ function* chunks(arr, n) {
   }
 }
 
-const SectionHeading = tw.h2`text-start text-4xl sm:text-5xl font-black tracking-wide text-center`;
+const SectionHeading = tw.h2`text-start text-4xl sm:text-5xl font-black tracking-wide text-center xsmall:max-w-[375px]`;
 const Header = tw(SectionHeading)``;
 
 export default function Slider({
@@ -60,14 +60,18 @@ export default function Slider({
 
   return (
     <div className="embla">
-      <Header>{heading}</Header>
+       {/* <Header>{heading}</Header> */}
 
-      <div className="embla__viewport" ref={emblaRef}>
+     <div
+        className="embla__viewport"
+        style={showArrows ? { paddingLeft: 64, paddingRight: 64 } : {}}
+        ref={emblaRef}
+      >
         <div className="embla__container">
           {productsChunks.map((productChunk, chunkindex) => {
             return (
               <div className="embla__slide" key={chunkindex}>
-                <div className="flex flex-row justify-center">
+                <div className="flex relative wrap flex-row justify-center">
                   {productChunk.map((product) => {
                     return (
                       <ProductCard

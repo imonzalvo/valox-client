@@ -16,7 +16,8 @@ import Loader from "@/components/common/Loader";
 import Layout from "@/components/layout";
 
 const GlobalContainer = tw.div`flex flex-1 justify-center md:w-full 
-                                sm:w-full lg:w-full px-8 tablet:px-4 bg-white min-h-full`;
+                                sm:w-full lg:w-full px-8 tablet:px-4 
+                                bg-white min-h-full overflow-visible`;
 
 const whatsAppNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER;
 

@@ -20,7 +20,7 @@ export default function Header({ companyInfo }) {
         scrollDirection === "down" ? "-top-24" : "top-0"
       } h-16 transition-all duration-500
         flex justify-between  mx-auto bg-white
-        shadow z-50`}
+        shadow z-50 header-shadow`}
     >
       <div className="w-full">
         <div className="antialiased bg-gray-100 dark-mode:bg-gray-900">

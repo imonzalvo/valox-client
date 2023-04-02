@@ -7,14 +7,15 @@ import * as api from "../api/homeInfo";
 import { useHomeInfo } from "../hooks/useHomeInfo";
 import { useCategory } from "@/hooks/useCategory";
 
-import AnimationRevealPage from "@/components/AnimationRevealPage";
 import Hero from "@/components/Hero";
 import Slider from "@/components/slider";
 import { useWidth } from "@/hooks/helpers/useWidth";
 
-const Container = tw.div`flex flex-1 w-full justify-center`;
+const SectionHeading = tw.h2`text-start text-4xl sm:text-5xl font-black tracking-wide text-center xsmall:max-w-[375px]`;
+const Header = tw(SectionHeading)``;
+const Container = tw.div`flex flex-1 flex-col items-center w-full justify-center`;
 const HighlightedText = tw.div`bg-primary-500 text-gray-100 px-4 inline-block`;
-
+const StyledDiv = tw.div`pt-8 max-w-6xl w-full font-display min-h-screen text-secondary-500 overflow-hidden flex flex-col items-center`;
 export const getServerSideProps = async () => {
   const queryClient = new QueryClient();
 
@@ -84,28 +85,46 @@ export default function Index() {
     homeInfo.company.configurations.image.sizes["tablet"].url
   }`;
 
+  console.log("hola", landingImageUrl)
+
   return (
-    <Container>
+    <Container
+      style={{
+        marginLeft: -32,
+        marginRight: -32,
+        width: "100%",
+      }}
+    >
       <Head>
         <title>{process.env.NEXT_PUBLIC_BUSINESS_TITLE}</title>
         <meta name="description" content={description} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <AnimationRevealPage>
-        <Hero
-          heading={
-            <>
-              Manualidades en crochet{" "}
-              <HighlightedText>Hechas en casa</HighlightedText>
-            </>
-          }
-          description={description}
-          imageSrc={landingImageUrl}
-          imageDecoratorBlob={true}
-          primaryButtonText="Order Now"
-          watchVideoButtonText="Meet The Chefs"
-        />
+      <Hero
+        heading={
+          <>
+            <span className="text-gray-900">Manualidades en crochet </span>
+            <HighlightedText>Hechas en casa</HighlightedText>
+          </>
+        }
+        description={description}
+        landingImageUrl={landingImageUrl}
+        imageDecoratorBlob={true}
+        primaryButtonText="Order Now"
+        watchVideoButtonText="Meet The Chefs"
+      />
+
+      <StyledDiv>
+        <Header
+          style={{
+            marginLeft: 32,
+            marginTop: 16,
+            marginRight: 32,
+          }}
+        >
+          Conocé nuestros <HighlightedText>productos</HighlightedText>
+        </Header>
         <Slider
           heading={
             <>
@@ -117,7 +136,7 @@ export default function Index() {
           productsByChunk={sliderProductsChunkAmount}
           fullWidthProducts={isMobile}
         />
-      </AnimationRevealPage>
+      </StyledDiv>
     </Container>
   );
 }

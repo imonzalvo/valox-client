@@ -22,6 +22,7 @@ module.exports = {
       },
     },
     screens: {
+      xsmall: { max: "515px" },
       small: { max: "768px" },
       tablet: { max: "1024px" },
       sm: "640px",

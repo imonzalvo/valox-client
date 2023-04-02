@@ -17,9 +17,11 @@ export default function ProductCard({
   return (
     <Link
       href={`/products/${id}`}
-      className={`"min-w-[200px] bg-white shadow-md rounded-3xl p-2 mx-3 my-3 cursor-pointer" ${
-        fullWidthProduct ? "w-full" : ""
-      }`}
+      className={`" 
+      min-w-[200px] bg-white shadow-md shadow rounded-3xl p-2 mx-3 my-3 cursor-pointer" ${
+        fullWidthProduct ? "w-[50%]" : ""
+      }
+      `}
     >
       <div className="overflow-x-hidden rounded-2xl relative">
         <Image
