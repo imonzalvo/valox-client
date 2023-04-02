@@ -3,9 +3,9 @@ import ProductItem from "./productItem";
 
 const subPriceRow = (title, price) => {
   return (
-    <div class="flex items-center justify-between">
-      <p class="text-gray-500">{title}</p>
-      <p class="text-lg font-semibold text-gray-900">{`$ ${price}`}</p>
+    <div className="flex items-center justify-between">
+      <p className="text-gray-500">{title}</p>
+      <p className="text-lg font-semibold text-gray-900">{`$ ${price}`}</p>
     </div>
   );
 };
@@ -18,12 +18,12 @@ export default function CheckoutSummary({ products, details }) {
     );
   }, [details]);
   return (
-    <div class="md:h-screen tablet:w-full small:w-full ">
-      <div class="px-4 sm:px-6 lg:px-8 tablet:px-0 tablet:w-full tablet:flex tablet:justify-center">
-        <div class="max-w-md rounded-3xl bg-white shadow-lg tablet:w-full">
-          <div class="px-8 py-12 sm:px-8">
+    <div className="md:h-screen tablet:w-full small:w-full ">
+      <div className="px-4 sm:px-6 lg:px-8 tablet:px-0 tablet:w-full tablet:flex tablet:justify-center">
+        <div className="max-w-md rounded-3xl bg-white shadow-lg tablet:w-full">
+          <div className="px-8 py-12 sm:px-8">
             <div>
-              <ul class="-my-8">
+              <ul className="-my-8">
                 {products.map((product) => {
                   return (
                     <ProductItem
@@ -37,7 +37,7 @@ export default function CheckoutSummary({ products, details }) {
                 })}
               </ul>
             </div>
-            <div class="mt-6 space-y-3 border-t border-b py-8">
+            <div className="mt-6 space-y-3 border-t border-b py-8">
               {subPriceRow("Subtotal", subtotal)}
               {subPriceRow("Envío", details.shippingOption.cost)}
               {subPriceRow(
@@ -45,9 +45,9 @@ export default function CheckoutSummary({ products, details }) {
                 details.shippingOption.cost
               )}
             </div>
-            <div class="mt-6 flex items-center justify-between">
-              <p class="text-xl font-medium text-gray-900">Total</p>
-              <p class="text-2xl font-semibold text-gray-900">{`$ ${details.totalAmount}`}</p>
+            <div className="mt-6 flex items-center justify-between">
+              <p className="text-xl font-medium text-gray-900">Total</p>
+              <p className="text-2xl font-semibold text-gray-900">{`$ ${details.totalAmount}`}</p>
             </div>
           </div>
         </div>

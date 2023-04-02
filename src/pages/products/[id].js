@@ -115,16 +115,16 @@ export default function Product() {
     updateNumberOfItems(numberOfitems - 1);
   }
   return (
-    <section class="max-w-6xl pt-8 pb-24 bg-blueGray-100 rounded-b-10xl overflow-hidden">
+    <section className="max-w-6xl pt-8 pb-24 bg-blueGray-100 rounded-b-10xl overflow-hidden">
       <Head>
         <title>{`${process.env.NEXT_PUBLIC_BUSINESS_TITLE} | ${product.title}`}</title>
         <meta name="description" content={product.description} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div class="container px-4 mx-auto">
+      <div className="container px-4 mx-auto">
         {/* // TODO: Flex wrap working badly */}
-        <div class="flex flex-wrap -mx-4">
+        <div className="flex flex-wrap -mx-4">
           <Topbar productTitle={product.title} />
           <ImageContainers>
             <ImageContainer>
@@ -139,7 +139,7 @@ export default function Product() {
               />
             </ImageContainer>
           </ImageContainers>
-          <div class="w-full lg:w-1/2 px-4">
+          <div className="w-full lg:w-1/2 px-4">
             <ProductInfo product={product} />
             {/* <Rating />
             <ColorPicker /> */}

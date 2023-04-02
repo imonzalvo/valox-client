@@ -1,12 +1,12 @@
 export default function Rating({}) {
     return (
-        <div class="flex mb-6 items-center">
-              <div class="inline-flex mr-4">
-                <button class="mr-1">
+        <div className="flex mb-6 items-center">
+              <div className="inline-flex mr-4">
+                <button className="mr-1">
                   <svg
                     width="20"
                     height="20"
-                    viewbox="0 0 20 20"
+                    viewBox="0 0 20 20"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
@@ -16,11 +16,11 @@ export default function Rating({}) {
                     ></path>
                   </svg>
                 </button>
-                <button class="mr-1">
+                <button className="mr-1">
                   <svg
                     width="20"
                     height="20"
-                    viewbox="0 0 20 20"
+                    viewBox="0 0 20 20"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
@@ -30,11 +30,11 @@ export default function Rating({}) {
                     ></path>
                   </svg>
                 </button>
-                <button class="mr-1">
+                <button className="mr-1">
                   <svg
                     width="20"
                     height="20"
-                    viewbox="0 0 20 20"
+                    viewBox="0 0 20 20"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
@@ -44,11 +44,11 @@ export default function Rating({}) {
                     ></path>
                   </svg>
                 </button>
-                <button class="mr-1">
+                <button className="mr-1">
                   <svg
                     width="20"
                     height="20"
-                    viewbox="0 0 20 20"
+                    viewBox="0 0 20 20"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
@@ -62,7 +62,7 @@ export default function Rating({}) {
                   <svg
                     width="20"
                     height="20"
-                    viewbox="0 0 20 20"
+                    viewBox="0 0 20 20"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
@@ -73,7 +73,7 @@ export default function Rating({}) {
                   </svg>
                 </button>
               </div>
-              <span class="text-md text-gray-400">4.59</span>
+              <span className="text-md text-gray-400">4.59</span>
             </div>
     )
 }

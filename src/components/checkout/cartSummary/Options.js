@@ -9,7 +9,7 @@ const OptionDescription = tw.span`font-sans mr-2 text-sm`;
 const Input = tw.input`mr-4 cursor-pointer`;
 const ErrorMessage = tw.span`mt-2 ml-4 text-red-600`;
 
-export default function ({
+export default function Options ({
   optionsTitle,
   options,
   selectedOption,

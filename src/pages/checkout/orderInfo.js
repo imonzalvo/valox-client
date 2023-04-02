@@ -13,6 +13,7 @@ import UserDataForm from "../../components/checkout/UserDataForm";
 import Loader from "@/components/common/Loader";
 import Layout from "@/components/layout";
 import CheckoutLayout from "@/components/checkoutLayout";
+import { useCart } from "@/providers/Cart";
 
 const Container = tw.div`flex mt-12 justify-between flex-1 font-sans max-w-screen-xl px-2
 sm:flex-col md:flex-col lg:flex-row xl:flex-row 2xl:flex-row tablet:flex-col tablet:items-center
@@ -32,6 +33,8 @@ export default function OrderInfo() {
     query: { product },
     push,
   } = useRouter();
+  const { cart, addItemToCart, isProductInCart } = useCart();
+
 
   const bottomRef = useRef(null);
   const scrollToBottom = () => {
@@ -108,7 +111,7 @@ export default function OrderInfo() {
         name: paymentMethod.paymentMethod.name,
         description: paymentMethod.paymentMethod.description,
         // TODO: Cost * products
-        price: paymentMethod.cost,
+        cost: paymentMethod.cost,
       };
     });
   }, [checkoutInfo]);

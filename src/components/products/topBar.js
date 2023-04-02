@@ -1,18 +1,18 @@
 export default function Topbar({productTitle}) {
   return (
-    <div class="w-full px-4">
-      <ul class="flex flex-wrap items-center mb-8">
-        <li class="mr-6">
+    <div className="w-full px-4">
+      <ul className="flex flex-wrap items-center mb-8">
+        <li className="mr-6">
           <a
-            class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-500"
+            className="flex items-center text-sm font-medium text-gray-500 hover:text-gray-500"
             href="#"
           >
             <span>{process.env.NEXT_PUBLIC_BUSINESS_TITLE}</span>
             <svg
-              class="ml-6"
+              className="ml-6"
               width="4"
               height="7"
-              viewbox="0 0 4 7"
+              viewBox="0 0 4 7"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
@@ -23,17 +23,17 @@ export default function Topbar({productTitle}) {
             </svg>
           </a>
         </li>
-        <li class="mr-6">
+        <li className="mr-6">
           <a
-            class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-500"
+            className="flex items-center text-sm font-medium text-gray-500 hover:text-gray-500"
             href="#"
           >
             <span>Tienda</span>
             <svg
-              class="ml-6"
+              className="ml-6"
               width="4"
               height="7"
-              viewbox="0 0 4 7"
+              viewBox="0 0 4 7"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
@@ -46,7 +46,7 @@ export default function Topbar({productTitle}) {
         </li>
         <li>
           <a
-            class="text-sm font-medium text-secondary-400 hover:text-secondary-600"
+            className="text-sm font-medium text-secondary-400 hover:text-secondary-600"
             href="#"
           >
             {productTitle}

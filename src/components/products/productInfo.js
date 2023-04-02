@@ -3,19 +3,19 @@ import { MinusIcon, PlusIcon } from "@heroicons/react/20/solid";
 
 export default function ProductInfo({ product }) {
   return (
-    <div class="max-w-md mb-6">
-      <h2 class="mb-4 text-5xl md:text-7xl lg:text-8xl font-heading font-medium">
+    <div className="max-w-md mb-6">
+      <h2 className="mb-4 text-5xl md:text-7xl lg:text-8xl font-heading font-medium">
         {product.title}
       </h2>
-      <p class="flex items-center mb-6">
-        <span class="mr-2 text-base text-gray-800 font-medium">$</span>
-        <span class="text-3xl text-gray-800 font-medium">{product.price}</span>
+      <p className="flex items-center mb-6">
+        <span className="mr-2 text-base text-gray-800 font-medium">$</span>
+        <span className="text-3xl text-gray-800 font-medium">{product.price}</span>
       </p>
-      <p class="text-lg text-gray-400">{product.description}</p>
+      <p className="text-lg text-gray-400">{product.description}</p>
 
       <div className="mt-8">
-        <h4 class="font-heading font-normal">Mas Información</h4>
-        <hr class="my-2 h-0.5 border-t-1 bg-neutral-100 opacity-100" />
+        <h4 className="font-heading font-normal">Mas Información</h4>
+        <hr className="my-2 h-0.5 border-t-1 bg-neutral-100 opacity-100" />
         <Disclosure>
           {({ open }) => (
             <>
@@ -48,7 +48,7 @@ export default function ProductInfo({ product }) {
             </>
           )}
         </Disclosure>
-        <hr class="my-2 h-0.5 border-t-1 bg-neutral-100 opacity-100" />
+        <hr className="my-2 h-0.5 border-t-1 bg-neutral-100 opacity-100" />
 
         <Disclosure>
           {({ open }) => (
