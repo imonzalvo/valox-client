@@ -22,7 +22,7 @@ export default function Hero({
       <div className="hero-section">
         <div
           className="background-hero"
-          style={{ backgroundImage: `url(${landingImageUrl})` }}
+          // style={{ backgroundImage: `url(${landingImageUrl})` }}
         />
         <InnerContainer>
           <TwoColumn>

@@ -1,3 +1,5 @@
+import { useMemo } from "react";
+
 import CategoriesMenu from "./modalMenu/categories/categoriesMenu";
 import SimpleMenu from "./modalMenu/simpleMenu/simpleMenu";
 
@@ -33,6 +35,11 @@ export default function Nav({
   menuOpen,
   closeModal,
 }) {
+  const hasSocialLinks = useMemo(() => {
+    const socialNavItem = NAV_ITEMS.find((item) => item.id == "social");
+    return socialNavItem.options.some((option) => !!option.url);
+  }, []);
+
   const categoriesTrees = companyInfo?.categoriesTrees;
   return (
     <nav
@@ -47,6 +54,9 @@ export default function Nav({
         closeModal={closeModal}
       />
       {NAV_ITEMS.map((navItem) => {
+        if (navItem.id == "social" && !hasSocialLinks) {
+          return;
+        }
         if (!!navItem.options) {
           return (
             <SimpleMenu
