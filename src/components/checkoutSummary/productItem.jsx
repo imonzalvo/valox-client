@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useMemo } from "react";
 
 export default function ProductItem({
   quantity,
@@ -7,6 +8,11 @@ export default function ProductItem({
   imageUrl,
   removeItem,
 }) {
+  const thumbnail = useMemo(() => {
+    return imageUrl.includes("localhost")
+      ? `${imageUrl}`
+      : `${process.env.NEXT_PUBLIC_API_URL}${imageUrl}`
+  }, [])
   return (
     <li className="flex py-6 text-left flex-row space-x-5 space-y-0">
       <div className="shrink-0 relative">
@@ -15,7 +21,7 @@ export default function ProductItem({
         </span>
         <Image
           className="h-24 w-24 max-w-full rounded-lg object-cover"
-          src={imageUrl}
+          src={thumbnail}
           alt=""
           width={96}
           height={96}
