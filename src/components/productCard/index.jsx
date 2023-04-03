@@ -2,21 +2,18 @@ import Image from "next/image";
 import Link from "next/link";
 import { useMemo } from "react";
 
-export default function ProductCard({
-  id,
-  title,
-  price,
-  imageUrl,
-  fullWidthProduct,
-}) {
-  const formatedUrl = useMemo(() => {
-    return imageUrl && imageUrl.includes("localhost")
-      ? `${imageUrl}`
-      : `${process.env.NEXT_PUBLIC_API_URL}${imageUrl}`;
-  }, [imageUrl]);
+export default function ProductCard({ product, fullWidthProduct }) {
+  const thumbnailImageUrl = useMemo(() => {
+    const firstImage = product.images[0].image;
+    console.log("hchau", product, firstImage);
+    const thumbnailImageUrl = firstImage.sizes["thumbnail"].url;
+    return thumbnailImageUrl.includes("localhost")
+      ? `${thumbnailImageUrl}`
+      : `${process.env.NEXT_PUBLIC_API_URL}${thumbnailImageUrl}`;
+  }, [product]);
   return (
     <Link
-      href={`/products/${id}`}
+      href={`/products/${product.id}`}
       className={`" 
       min-w-[200px] bg-white shadow-md shadow rounded-3xl p-2 mx-3 my-3 cursor-pointer" ${
         fullWidthProduct ? "w-[50%]" : ""
@@ -25,12 +22,12 @@ export default function ProductCard({
     >
       <div className="overflow-x-hidden rounded-2xl relative">
         <Image
-          alt={title}
+          alt={product.title}
           className={`rounded-2xl object-cover ${
             fullWidthProduct ? "w-full h-[400px]" : "w-[230px] h-[230px]"
           }`}
           priority
-          src={formatedUrl}
+          src={thumbnailImageUrl}
           width={220}
           height={220}
         />
@@ -56,8 +53,10 @@ export default function ProductCard({
       </div>
       <div className="mt-8 pl-2 mb-2 flex justify-between ">
         <div>
-          <p className="text-lg font-semibold text-gray-900 mb-0">{title}</p>
-          <p className="text-md text-gray-800 mt-0">{`$ ${price}`}</p>
+          <p className="text-lg font-semibold text-gray-900 mb-0">
+            {product.title}
+          </p>
+          <p className="text-md text-gray-800 mt-0">{`$ ${product.price}`}</p>
         </div>
         <div className="flex flex-col-reverse mb-1 mr-4 group cursor-pointer">
           <svg

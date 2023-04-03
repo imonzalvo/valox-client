@@ -12,9 +12,7 @@ export default function ProductList({ products }) {
                 <ProductCard
                   key={product.id}
                   id={product.id}
-                  title={product.title}
-                  imageUrl={product.images[0].image.url}
-                  price={product.price}
+                  product={product}
                 />
               ))}
             </div>

@@ -77,9 +77,7 @@ export default function Slider({
                       <ProductCard
                         key={product.id}
                         id={product.id}
-                        title={product.title}
-                        price={product.price}
-                        imageUrl={product.images[0].image.url}
+                        product={product}
                         fullWidthProduct={fullWidthProducts}
                       />
                     );
