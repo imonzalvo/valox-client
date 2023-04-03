@@ -22,9 +22,10 @@ const calculatePaymentMethodCost = (
     return !!paymentMethod.cost ? paymentMethod.cost : 0;
   }
 
-  const selectedOption = paymentMethods.filter((option) => {
+  const selectedOption = paymentMethods.find((option) => {
     return option.id == selectedPaymentMethod;
   });
+
 
   if (!!selectedOption && !!selectedOption.cost) {
     return selectedOption.cost;
@@ -73,9 +74,9 @@ export default function CartSummary({
     return calculatePaymentMethodCost(
       paymentMethod,
       paymentMethods,
-      selectPaymentMethod
+      selectedPaymentMethod
     );
-  }, [paymentMethod, paymentMethods, selectPaymentMethod]);
+  }, [paymentMethod, paymentMethods, selectedPaymentMethod]);
 
   const shippingOptionCost = useMemo(() => {
     return calculateShippingOptionCost(

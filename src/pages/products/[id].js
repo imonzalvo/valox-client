@@ -91,19 +91,32 @@ export default function Product() {
   }, [product]);
 
   const goToCheckout = () => {
-    // addItemToCart({
-    //   id,
-    //   quantity: numberOfitems,
-    //   product: {
-    //     id: id,
-    //     title: product.title,
-    //     description: product.description,
-    //     price: product.price,
-    //     image: product.images[0].image.sizes.thumbnail.url,
-    //   },
-    // });
+    addItemToCart({
+      id,
+      quantity: numberOfitems,
+      product: {
+        id: id,
+        title: product.title,
+        description: product.description,
+        price: product.price,
+        image: product.images[0].image.sizes.thumbnail.url,
+      },
+    });
 
-    router.push(`/checkout/orderInfo?product=${product.id}`);
+    const orderProducts = [
+      {
+        id,
+        quantity: numberOfitems,
+      },
+    ];
+
+    // router.push(`/checkout/orderInfo?product=${product.id}`);
+    router.push(
+      {
+        pathname: "/checkout/orderInfo",
+        query: { rawProducts: JSON.stringify(orderProducts) },
+      },
+    );
   };
 
   function increment() {

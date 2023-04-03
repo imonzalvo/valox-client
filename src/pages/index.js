@@ -85,8 +85,6 @@ export default function Index() {
     homeInfo.company.configurations.image.sizes["tablet"].url
   }`;
 
-  console.log("hola", landingImageUrl)
-
   return (
     <Container
       style={{

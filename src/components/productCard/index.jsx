@@ -5,7 +5,6 @@ import { useMemo } from "react";
 export default function ProductCard({ product, fullWidthProduct }) {
   const thumbnailImageUrl = useMemo(() => {
     const firstImage = product.images[0].image;
-    console.log("hchau", product, firstImage);
     const thumbnailImageUrl = firstImage.sizes["thumbnail"].url;
     return thumbnailImageUrl.includes("localhost")
       ? `${thumbnailImageUrl}`

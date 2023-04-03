@@ -13,7 +13,7 @@ import UserDataForm from "../../components/checkout/UserDataForm";
 import Loader from "@/components/common/Loader";
 import Layout from "@/components/layout";
 import CheckoutLayout from "@/components/checkoutLayout";
-import { useCart } from "@/providers/Cart";
+import { calculateMethodPrice } from "@/helpers/utils";
 
 const Container = tw.div`flex mt-12 justify-between flex-1 font-sans max-w-screen-xl px-2
 sm:flex-col md:flex-col lg:flex-row xl:flex-row 2xl:flex-row tablet:flex-col tablet:items-center
@@ -29,12 +29,18 @@ const RightContainer = tw(
 const FormTitle = tw.h1`font-bold`;
 
 export default function OrderInfo() {
-  const {
-    query: { product },
-    push,
-  } = useRouter();
-  const { cart, addItemToCart, isProductInCart } = useCart();
+  const { query, push } = useRouter();
 
+  const orderProducts = useMemo(
+    () => (query.rawProducts ? JSON.parse(query.rawProducts) : []),
+    [query.rawProducts]
+  );
+
+  // TODO: Enable cart
+  const product = useMemo(
+    () => (orderProducts.length ? orderProducts[0].id : undefined),
+    [orderProducts]
+  );
 
   const bottomRef = useRef(null);
   const scrollToBottom = () => {
@@ -84,6 +90,13 @@ export default function OrderInfo() {
   const [selectedShippingOption, setSelectedShippingOption] = useState(null);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
 
+  const productsAmount = useMemo(() => {
+    if (!checkoutInfo) return 0;
+    return checkoutInfo.products.reduce((acc, product) => {
+      return acc + product.price;
+    }, 0);
+  }, [checkoutInfo]);
+
   const shippingOptions = useMemo(() => {
     if (!checkoutInfo) {
       return [];
@@ -94,11 +107,10 @@ export default function OrderInfo() {
         id: shippingOption.id,
         name: shippingOption.shippingOption.name,
         description: shippingOption.shippingOption.description,
-        // TODO: Cost * products
-        cost: shippingOption.cost,
+        cost: calculateMethodPrice(shippingOption, productsAmount),
       };
     });
-  }, [checkoutInfo]);
+  }, [checkoutInfo, productsAmount]);
 
   const paymentMethods = useMemo(() => {
     if (!checkoutInfo) {
@@ -110,11 +122,10 @@ export default function OrderInfo() {
         id: paymentMethod.id,
         name: paymentMethod.paymentMethod.name,
         description: paymentMethod.paymentMethod.description,
-        // TODO: Cost * products
-        cost: paymentMethod.cost,
+        cost: calculateMethodPrice(paymentMethod, productsAmount),
       };
     });
-  }, [checkoutInfo]);
+  }, [checkoutInfo, productsAmount]);
 
   const getSelectedPaymentMethod = () => {
     return checkoutInfo.paymentMethods.find((shippingOption) => {
