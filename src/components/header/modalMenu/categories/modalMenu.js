@@ -1,7 +1,12 @@
 import { getShopUrlForCategoryId } from "@/helpers/routedHelper";
+import { useRouter } from "next/router";
 import ModalItem from "../modalItem";
 
 export default function ModalMenu({ categoriesTrees, setOpen, closeModal }) {
+  const {
+    query,
+  } = useRouter();
+
   const parentCategories = categoriesTrees.map((categoryTree) => {
     return { id: categoryTree.id, name: categoryTree.name };
   });
@@ -11,7 +16,7 @@ export default function ModalMenu({ categoriesTrees, setOpen, closeModal }) {
       <div className="px-2 pt-2 pb-4 bg-white rounded-md shadow-lg dark-mode:bg-gray-700">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {parentCategories.map((category) => {
-            const categoryUrl = getShopUrlForCategoryId(category.id);
+            const categoryUrl = getShopUrlForCategoryId(query.business, category.id);
             return (
               <ModalItem
                 key={category.id}

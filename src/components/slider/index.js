@@ -3,6 +3,7 @@ import tw from "twin.macro";
 import useEmblaCarousel from "embla-carousel-react";
 import ProductCard from "../productCard";
 import { DotButton, NextButton, PrevButton } from "./ArrowsDots";
+import { getProductWidthMobile } from "@/helpers/utils";
 
 function* chunks(arr, n) {
   for (let i = 0; i < arr.length; i += n) {
@@ -20,7 +21,7 @@ export default function Slider({
   showArrows = true,
   fullWidthProducts = false,
 }) {
-  const [emblaRef, emblaApi] = useEmblaCarousel();
+  const [emblaRef, emblaApi] = useEmblaCarousel({ align: "center" });
   const [prevBtnEnabled, setPrevBtnEnabled] = useState(false);
   const [nextBtnEnabled, setNextBtnEnabled] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -58,15 +59,15 @@ export default function Slider({
     return [...chunks(products, productsByChunk)];
   }, [products, productsByChunk]);
 
+  console.log("show", showArrows);
   return (
     <div className="embla">
-       {/* <Header>{heading}</Header> */}
-
-     <div
+      <div
         className="embla__viewport"
         style={showArrows ? { paddingLeft: 64, paddingRight: 64 } : {}}
         ref={emblaRef}
       >
+        {console.log("chunk", productsChunks)}
         <div className="embla__container">
           {productsChunks.map((productChunk, chunkindex) => {
             return (
@@ -74,12 +75,13 @@ export default function Slider({
                 <div className="flex relative wrap flex-row justify-center">
                   {productChunk.map((product) => {
                     return (
-                      <ProductCard
-                        key={product.id}
-                        id={product.id}
-                        product={product}
-                        fullWidthProduct={fullWidthProducts}
-                      />
+                      <div key={product.id} className="mb-4 relative mx-2">
+                        <ProductCard
+                          id={product.id}
+                          product={product}
+                          fullWidthProduct={fullWidthProducts}
+                        />
+                      </div>
                     );
                   })}
                 </div>

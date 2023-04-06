@@ -3,11 +3,11 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { useRouter } from "next/router";
 
 export default function CategoriesDisclosure({ category, defaultOpen }) {
-  const { push } = useRouter();
+  const { push, query } = useRouter();
   const goToCategoryProducts = (categoryId) => {
-    push(`?categoryId=${categoryId}`, ``, {
-      shallow: true,
-    });
+
+    push({ query: { ...query, categoryId: categoryId } }, undefined, { shallow: true });
+
   };
 
   return (

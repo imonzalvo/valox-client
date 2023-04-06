@@ -4,17 +4,18 @@ import { useRouter } from "next/router";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 import ImageGallery from "react-image-gallery";
 
-import * as api from "../../api/products";
-import { useProduct } from "../../hooks/useProduct";
-import { useCart } from "../../providers/Cart";
+import * as api from "../../../api/products";
+import { useProduct } from "../../../hooks/useProduct";
+import { useCart } from "../../../providers/Cart";
 
-import QuantityPicker from "../../components/products/QuantityPicker";
+import QuantityPicker from "../../../components/products/QuantityPicker";
 import Rating from "@/components/products/rating";
 import ColorPicker from "@/components/products/colors";
 import Topbar from "@/components/products/topBar";
 import ProductImages from "@/components/products/productImages";
 import ProductInfo from "@/components/products/productInfo";
 import Head from "next/head";
+import { getCheckoutOrderInfo } from "@/helpers/routedHelper";
 
 const Container = tw.div`mt-12 flex justify-between sm:py-12
 md:flex-row
@@ -73,9 +74,9 @@ const renderButton = (onClick, title) => {
 };
 
 export default function Product() {
-  const router = useRouter();
   const {
-    query: { id },
+    push,
+    query: { business, id },
   } = useRouter();
   const [numberOfitems, updateNumberOfItems] = useState(1);
   const { data: product, isFetching } = useProduct(id);
@@ -110,13 +111,10 @@ export default function Product() {
       },
     ];
 
-    // router.push(`/checkout/orderInfo?product=${product.id}`);
-    router.push(
-      {
-        pathname: "/checkout/orderInfo",
-        query: { rawProducts: JSON.stringify(orderProducts) },
-      },
-    );
+    push({
+      pathname: getCheckoutOrderInfo(business),
+      query: { rawProducts: JSON.stringify(orderProducts) },
+    });
   };
 
   function increment() {

@@ -2,7 +2,6 @@ export const isOrderStatusError = (status) => {
   return status == "payment_error";
 };
 
-
 export const calculateMethodPrice = (method, productsAmount) => {
   switch (method.costType) {
     case "FIXED": {
@@ -10,7 +9,7 @@ export const calculateMethodPrice = (method, productsAmount) => {
     }
     case "PERCENTAGE": {
       const res = (method.cost / 100) * productsAmount;
-      return Math.round(res)
+      return Math.round(res);
     }
     default:
       return method.cost;

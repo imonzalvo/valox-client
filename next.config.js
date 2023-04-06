@@ -4,7 +4,7 @@ const nextConfig = {
   poweredByHeader: false,
   images: {
     formats: ['image/avif', 'image/webp'],
-    domains: ['valox-admin-test.fly.dev', 'localhost'],
+    domains: ['valox-admin-test.fly.dev', 'mitienda-prod.fly.dev','localhost'],
     remotePatterns: [
       {
         protocol: 'https',

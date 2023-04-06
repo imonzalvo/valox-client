@@ -1,8 +1,13 @@
+import { getProductUrl } from "@/helpers/routedHelper";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useMemo } from "react";
 
-export default function ProductCard({ product, fullWidthProduct }) {
+export default function ProductCard({ product, fullWidthProduct, styles }) {
+  const {
+    query: { business },
+  } = useRouter();
   const thumbnailImageUrl = useMemo(() => {
     const firstImage = product.images[0].image;
     const thumbnailImageUrl = firstImage.sizes["thumbnail"].url;
@@ -12,23 +17,22 @@ export default function ProductCard({ product, fullWidthProduct }) {
   }, [product]);
   return (
     <Link
-      href={`/products/${product.id}`}
+      href={getProductUrl(business, product.id)}
+      style={{ display: "block" }}
       className={`" 
-      min-w-[200px] bg-white shadow-md shadow rounded-3xl p-2 mx-3 my-3 cursor-pointer" ${
-        fullWidthProduct ? "w-[50%]" : ""
-      }
+      bg-white shadow-md shadow rounded-3xl p-2 cursor-pointer"
       `}
     >
       <div className="overflow-x-hidden rounded-2xl relative">
         <Image
           alt={product.title}
           className={`rounded-2xl object-cover ${
-            fullWidthProduct ? "w-full h-[400px]" : "w-[230px] h-[230px]"
+            fullWidthProduct ? "w-full h-[250px]" : "w-[230px] h-[230px]"
           }`}
           priority
           src={thumbnailImageUrl}
-          width={220}
-          height={220}
+          width={300}
+          height={300}
         />
         <p
           style={{ top: "4px", right: "4px" }}
@@ -50,7 +54,10 @@ export default function ProductCard({ product, fullWidthProduct }) {
           </svg>
         </p>
       </div>
-      <div className="mt-8 pl-2 mb-2 flex justify-between ">
+      <div
+        className="mt-4 pl-2 mb-2"
+        // flex justify-between
+      >
         <div>
           <p className="text-lg font-semibold text-gray-900 mb-0">
             {product.title}

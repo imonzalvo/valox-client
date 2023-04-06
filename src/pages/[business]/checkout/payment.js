@@ -5,12 +5,12 @@ import Script from "next/script";
 import { useRouter } from "next/router";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 
-import * as api from "../../api/orders";
+import * as api from "../../../api/orders";
 import { useOrder } from "@/hooks/useOrder";
 import Loader from "@/components/common/Loader";
 import Layout from "@/components/layout";
 import CheckoutLayout from "@/components/checkoutLayout";
-// import CartSummary from "../components/checkout/cartSummary";
+import { getCongratsUrl } from "@/helpers/routedHelper";
 
 const Container = tw.div`flex justify-center px-10 flex-1 mt-4 md:flex-row lg:flex-row xl:flex-row 2xl:flex-row small:flex-col-reverse small:items-center`;
 const HalfContaier = tw.div`flex small:w-full flex-1 justify-center`;
@@ -36,7 +36,7 @@ export default function MpCheckout() {
 
   const {
     push,
-    query: { orderId },
+    query: { business, orderId },
     isReady,
   } = useRouter();
 
@@ -50,7 +50,7 @@ export default function MpCheckout() {
   }
 
   function goToCongrats(orderId) {
-    push(`/checkout/congrats?orderId=${orderId}`);
+    push(getCongratsUrl(business, orderId));
   }
 
   const buildTransaction = (cardFormData) => ({

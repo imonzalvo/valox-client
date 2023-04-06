@@ -5,15 +5,16 @@ import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 
-import * as api from "../../api/orders";
+import * as api from "../../../api/orders";
 import { useCheckoutInfo } from "@/hooks/useCheckoutInfo";
 
-import CartSummary from "../../components/checkout/cartSummary/index";
-import UserDataForm from "../../components/checkout/UserDataForm";
+import CartSummary from "../../../components/checkout/cartSummary/index";
+import UserDataForm from "../../../components/checkout/UserDataForm";
 import Loader from "@/components/common/Loader";
 import Layout from "@/components/layout";
 import CheckoutLayout from "@/components/checkoutLayout";
 import { calculateMethodPrice } from "@/helpers/utils";
+import { getCongratsUrl } from "@/helpers/routedHelper";
 
 const Container = tw.div`flex mt-12 justify-between flex-1 font-sans max-w-screen-xl px-2
 sm:flex-col md:flex-col lg:flex-row xl:flex-row 2xl:flex-row tablet:flex-col tablet:items-center
@@ -29,11 +30,14 @@ const RightContainer = tw(
 const FormTitle = tw.h1`font-bold`;
 
 export default function OrderInfo() {
-  const { query, push } = useRouter();
+  const {
+    query: { rawProducts, business },
+    push,
+  } = useRouter();
 
   const orderProducts = useMemo(
-    () => (query.rawProducts ? JSON.parse(query.rawProducts) : []),
-    [query.rawProducts]
+    () => (rawProducts ? JSON.parse(rawProducts) : []),
+    [rawProducts]
   );
 
   // TODO: Enable cart
@@ -48,7 +52,7 @@ export default function OrderInfo() {
   };
 
   const { data: checkoutInfo, isFetching: isFetchingCheckoutInfo } =
-    useCheckoutInfo(product);
+    useCheckoutInfo(business, product);
 
   const { mutate, isLoading: isCreatingOrder } = useMutation(api.createOrder, {
     onSuccess: (data) => {
@@ -136,9 +140,9 @@ export default function OrderInfo() {
   function goToCongrats(orderId) {
     const paymentMethod = getSelectedPaymentMethod();
     if (paymentMethod.paymentMethod.mercadopago) {
-      push(`/checkout/payment?orderId=${orderId}`);
+      push(getPaymentsUrl(business, orderId));
     } else {
-      push(`/checkout/congrats?orderId=${orderId}`);
+      push(getCongratsUrl(business, orderId));
     }
   }
 

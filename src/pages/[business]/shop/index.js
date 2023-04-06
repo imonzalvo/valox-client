@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 
-import * as api from "../../api/homeInfo";
+import * as api from "../../../api/homeInfo";
 import { useHomeInfo } from "@/hooks/useHomeInfo";
 
 import ShopSidebar from "@/components/shop/topBar";
@@ -11,7 +11,7 @@ import MoblileModalFilters from "@/components/shop/mobileModalFilters";
 import { useCategory } from "@/hooks/useCategory";
 import Loader from "@/components/common/Loader";
 import Head from "next/head";
-import ProductList from "../../components/shop/productList";
+import ProductList from "../../../components/shop/productList";
 
 export const getServerSideProps = async () => {
   const queryClient = new QueryClient();

@@ -5,15 +5,19 @@ export default function ProductList({ products }) {
     <div className="lg:col-span-3">
       {
         <div className="bg-white">
-          <div className="mx-auto px-4  px-6 lg:max-w-7xl lg:px-8">
+          <div className="mx-auto px-4 px-6 lg:max-w-7xl lg:px-8">
             <h2 className="sr-only">Products</h2>
-            <div className="flex flex-1 flex-wrap flex-row justify-around">
+            <div className="flex flex-1 flex-wrap flex-row start items-start">
               {products.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  id={product.id}
-                  product={product}
-                />
+                <div
+                key={product.id}
+                className="mr-6 mb-6"
+                >
+                  <ProductCard
+                    id={product.id}
+                    product={product}
+                  />
+                </div>
               ))}
             </div>
           </div>

@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
 import HashLoader from "react-spinners/HashLoader";
+import { getProductUrl } from "@/helpers/routedHelper";
 
 export const SectionHeading = tw.h2`text-start text-4xl sm:text-5xl font-black tracking-wide text-center mb-12`;
 const Header = tw(SectionHeading)``;
@@ -68,7 +69,7 @@ export default function TabGrid({
   const toggleModal = () => setModalIsOpen(!modalIsOpen);
 
   function goToVip(id) {
-    router.push(`/products/${id}`);
+    router.push(getProductUrl(router.query.business, id));
   }
 
   return (

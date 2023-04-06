@@ -1,10 +1,10 @@
 import axios from "axios";
 
-export const getCheckoutInfo = async (product) => {
-  const { data } = await axios.post(
-    `${process.env.NEXT_PUBLIC_API_URL}/checkout/${process.env.NEXT_PUBLIC_BUSINESS_HANDLE}`,
+export const getCheckoutInfo = async (handle, product) => {
+  const res = await axios.post(
+    `${process.env.NEXT_PUBLIC_API_URL}/checkout/${handle}`,
     { products: [{ id: product}] }
   );
 
-  return data;
+  return res.data;
 };

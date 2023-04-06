@@ -7,6 +7,7 @@ export default function CategoriesMenu({
   categoriesTrees,
   closeModal,
 }) {
+
   const handleOpen = () => {
     if (open) {
       setModalOpen("");

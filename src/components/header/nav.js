@@ -40,7 +40,7 @@ export default function Nav({
     return socialNavItem.options.some((option) => !!option.url);
   }, []);
 
-  const categoriesTrees = companyInfo?.categoriesTrees;
+  const categoriesTrees = companyInfo ? companyInfo.categoriesTrees : [];
   return (
     <nav
       className={`
