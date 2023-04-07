@@ -16,6 +16,7 @@ import ProductImages from "@/components/products/productImages";
 import ProductInfo from "@/components/products/productInfo";
 import Head from "next/head";
 import { getCheckoutOrderInfo } from "@/helpers/routedHelper";
+import { useWidth } from "@/hooks/helpers/useWidth";
 
 const Container = tw.div`mt-12 flex justify-between sm:py-12
 md:flex-row
@@ -28,7 +29,7 @@ const ImageContainer = styled.div`
     height: 500px;
   }
 `;
-const ImageContainers = tw.div`w-full md:w-1/2 h-120 flex-1 mb-32 mr-8`;
+const ImageContainers = tw.div`w-full md:w-1/2 h-120 flex-1 mb-32 mx-4`;
 const QuantityPickerContainer = tw.div`my-6`;
 const StyledButton = tw.button`mt-8 cursor-pointer w-full text-sm font-bold tracking-wider bg-transparent 
                               hover:bg-black text-black font-semibold 
@@ -79,6 +80,8 @@ export default function Product() {
     query: { business, id },
   } = useRouter();
   const [numberOfitems, updateNumberOfItems] = useState(1);
+  const width = useWidth();
+
   const { data: product, isFetching } = useProduct(id);
   const [selectedImage, setSelectedImage] = useState(
     product.images[0].image.url
@@ -125,6 +128,11 @@ export default function Product() {
     if (numberOfitems === 1) return;
     updateNumberOfItems(numberOfitems - 1);
   }
+
+  const isMobile = useMemo(() => {
+    return width < 1024 || false
+  }, [width]);
+
   return (
     <section className="max-w-6xl pt-8 pb-24 bg-blueGray-100 rounded-b-10xl overflow-hidden">
       <Head>
@@ -147,10 +155,13 @@ export default function Product() {
                 showNav={false}
                 showFullscreenButton={true}
                 useTranslate3D={false}
+                thumbnailPosition={isMobile ? undefined : "left"}
+                showIndex={isMobile}
+                showThumbnails={!isMobile}
               />
             </ImageContainer>
           </ImageContainers>
-          <div className="w-full lg:w-1/2 px-4">
+          <div className="w-full lg:w-1/2 px-4 mx-4">
             <ProductInfo product={product} />
             {/* <Rating />
             <ColorPicker /> */}

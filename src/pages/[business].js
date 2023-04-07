@@ -71,10 +71,6 @@ export default function Index() {
     homeInfo.company.configurations.image.sizes["tablet"].url
   }`;
 
-  const OPTIONS = { align: "center", loop: true };
-  const SLIDE_COUNT = 5;
-  const SLIDES = Array.from(Array(SLIDE_COUNT).keys());
-
   return (
     <Container
       style={{
