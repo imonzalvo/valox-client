@@ -80,8 +80,11 @@ export default function Index() {
       }}
     >
       <Head>
-        <title>{process.env.NEXT_PUBLIC_BUSINESS_TITLE}</title>
+        <title>{homeInfo.company.name}</title>
+        <meta name="og.title" content={homeInfo.company.name} />
+        <meta name="og.description" content={description} />
         <meta name="description" content={description} />
+        <meta name="og.description" content={description} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

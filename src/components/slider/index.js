@@ -15,7 +15,6 @@ const SectionHeading = tw.h2`text-start text-4xl sm:text-5xl font-black tracking
 const Header = tw(SectionHeading)``;
 
 export default function Slider({
-  heading,
   products,
   productsByChunk,
   showArrows = true,
@@ -64,7 +63,6 @@ export default function Slider({
     <div className="embla">
       <div
         className="embla__viewport"
-        style={showArrows ? { paddingLeft: 64, paddingRight: 64 } : {}}
         ref={emblaRef}
       >
         {console.log("chunk", productsChunks)}
@@ -90,10 +88,10 @@ export default function Slider({
           })}
         </div>
 
-        {showArrows && (
+        {true && (
           <PrevButton onClick={scrollPrev} enabled={prevBtnEnabled} />
         )}
-        {showArrows && (
+        {true && (
           <NextButton onClick={scrollNext} enabled={nextBtnEnabled} />
         )}
       </div>

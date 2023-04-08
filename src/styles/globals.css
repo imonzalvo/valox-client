@@ -109,24 +109,6 @@
   text-align: center;
   pointer-events: none;
 }
-/* .embla__slide__number > span {
-  color: var(--brand-primary);
-  background-image: linear-gradient(
-    45deg,
-    var(--brand-primary),
-    var(--brand-secondary)
-  );
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-size: 1.6rem;
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-} */
 .embla__dot,
 .embla__button {
   -webkit-appearance: none;
@@ -150,7 +132,7 @@
   align-items: center;
 }
 .embla__dot {
-  width: 1rem;
+  width: 0.6rem;
   height: 3rem;
   display: flex;
   align-items: center;

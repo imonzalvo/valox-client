@@ -3,32 +3,8 @@ import { useMemo } from "react";
 import CategoriesMenu from "./modalMenu/categories/categoriesMenu";
 import SimpleMenu from "./modalMenu/simpleMenu/simpleMenu";
 
-const NAV_ITEMS = [
-  {
-    id: "contact",
-    name: "Contact",
-    link: "#",
-  },
-  {
-    id: "we",
-    name: " ¿Quienes Somos?",
-    link: "#",
-  },
-  {
-    id: "social",
-    name: "Redes Sociales",
-    link: "#",
-    options: [
-      {
-        id: "instagram",
-        name: "Instagram",
-        url: process.env.NEXT_PUBLIC_INSTAGRAM_URL,
-      },
-    ],
-  },
-];
-
 export default function Nav({
+  navItems,
   modalOpen,
   setModalOpen,
   companyInfo,
@@ -36,8 +12,9 @@ export default function Nav({
   closeModal,
 }) {
   const hasSocialLinks = useMemo(() => {
-    const socialNavItem = NAV_ITEMS.find((item) => item.id == "social");
-    return socialNavItem.options.some((option) => !!option.url);
+    // const socialNavItem = NAV_ITEMS.find((item) => item.id == "social");
+    // return socialNavItem.options.some((option) => !!option.url);
+    return false;
   }, []);
 
   const categoriesTrees = companyInfo ? companyInfo.categoriesTrees : [];
@@ -53,7 +30,7 @@ export default function Nav({
         categoriesTrees={categoriesTrees}
         closeModal={closeModal}
       />
-      {NAV_ITEMS.map((navItem) => {
+      {navItems.map((navItem) => {
         if (navItem.id == "social" && !hasSocialLinks) {
           return;
         }

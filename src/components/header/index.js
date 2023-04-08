@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 import Nav from "./nav";
 import useScrollDirection from "../helpers/useScrollDirection";
@@ -18,6 +18,37 @@ export default function Header({ companyInfo }) {
   const closeModal = useCallback(() => {
     setMenuOpen(false);
   }, []);
+
+  const navItems = useMemo(() => {
+    const items = [
+      {
+        id: "contact",
+        name: "Contact",
+        link: "#",
+      },
+      {
+        id: "we",
+        name: " ¿Quienes Somos?",
+        link: "#",
+      },
+    ];
+
+    if (!!companyInfo?.configurations?.instagramUrl) {
+      items.push({
+        id: "social",
+        name: "Redes Sociales",
+        link: "#",
+        options: [
+          {
+            id: "instagram",
+            name: "Instagram",
+            url: process.env.NEXT_PUBLIC_INSTAGRAM_URL,
+          },
+        ],
+      });
+    }
+    return items;
+  });
 
   return (
     <header
@@ -66,6 +97,7 @@ export default function Header({ companyInfo }) {
                 </button>
               </div>
               <Nav
+                navItems={navItems}
                 modalOpen={modalOpen}
                 setModalOpen={setModalOpen}
                 closeModal={() => closeModal()}

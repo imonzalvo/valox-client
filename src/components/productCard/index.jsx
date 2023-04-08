@@ -27,8 +27,9 @@ export default function ProductCard({ product, fullWidthProduct, styles }) {
         <Image
           alt={product.title}
           className={`rounded-2xl object-cover ${
-            fullWidthProduct ? "w-full h-[250px]" : "w-[230px] h-[230px]"
-          }`}
+            false ? "w-full h-[250px]" : "w-[230px] h-[230px]"
+          }`
+        }
           priority
           src={thumbnailImageUrl}
           width={300}
