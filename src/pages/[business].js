@@ -74,8 +74,6 @@ export default function Index() {
   return (
     <Container
       style={{
-        marginLeft: -32,
-        marginRight: -32,
         width: "100%",
       }}
     >
