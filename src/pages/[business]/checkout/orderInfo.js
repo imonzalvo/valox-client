@@ -139,7 +139,6 @@ export default function OrderInfo() {
 
   function goToCongrats(orderId) {
     const paymentMethod = getSelectedPaymentMethod();
-    console.log("what", orderId)
     if (paymentMethod.paymentMethod.mercadopago) {
       push(getPaymentsUrl(business, orderId));
     } else {

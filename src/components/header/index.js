@@ -6,6 +6,7 @@ import useScrollDirection from "../helpers/useScrollDirection";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { getBusinessHome } from "@/helpers/routedHelper";
+import CartSvgIcon from "../common/CartSvgIcon";
 
 export default function Header({ companyInfo }) {
   const {
@@ -48,7 +49,7 @@ export default function Header({ companyInfo }) {
       });
     }
     return items;
-  });
+  }, [companyInfo?.configurations?.instagramUrl]);
 
   return (
     <header
@@ -69,32 +70,39 @@ export default function Header({ companyInfo }) {
                 >
                   {process.env.NEXT_PUBLIC_BUSINESS_TITLE}
                 </Link>
-                <button
-                  className="outline:none rounded-lg md:hidden focus:outline-none"
-                  onClick={() => {
-                    setMenuOpen((prevState) => !prevState);
-                  }}
-                >
-                  <svg
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    className="w-6 h-6"
-                  >
-                    {!menuOpen ? (
-                      <path
-                        fillRule="evenodd"
-                        d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM9 15a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z"
-                        clipRule="evenodd"
-                      ></path>
-                    ) : (
-                      <path
-                        fillRule="evenodd"
-                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                        clipRule="evenodd"
-                      ></path>
-                    )}
-                  </svg>
-                </button>
+                <div className="flex flex-row items-center md:hidden">
+                  <div className="w-[44px] h-[40px] block">
+                    {/* <CartSvgIcon  itemsCount={1}/> */}
+                  </div>
+                  <div className="w-[44px] h-[40px] flex flex-row items-center justify-center">
+                    <button
+                      className="ml-2 outline:none rounded-lg md:hidden focus:outline-none"
+                      onClick={() => {
+                        setMenuOpen((prevState) => !prevState);
+                      }}
+                    >
+                      <svg
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        className="w-6 h-6"
+                      >
+                        {!menuOpen ? (
+                          <path
+                            fillRule="evenodd"
+                            d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM9 15a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z"
+                            clipRule="evenodd"
+                          ></path>
+                        ) : (
+                          <path
+                            fillRule="evenodd"
+                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                            clipRule="evenodd"
+                          ></path>
+                        )}
+                      </svg>
+                    </button>
+                  </div>
+                </div>
               </div>
               <Nav
                 navItems={navItems}
@@ -104,7 +112,12 @@ export default function Header({ companyInfo }) {
                 menuOpen={menuOpen}
                 companyInfo={companyInfo}
               ></Nav>
-              <div></div>
+
+              <div className="small:hidden">
+                <div className="w-[44px] h-[40px] block">
+                  {/* <CartSvgIcon  itemsCount={1}/> */}
+                </div>
+              </div>
             </div>
           </div>
         </div>

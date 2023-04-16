@@ -58,14 +58,9 @@ export default function Slider({
     return [...chunks(products, productsByChunk)];
   }, [products, productsByChunk]);
 
-  console.log("show", showArrows);
   return (
     <div className="embla">
-      <div
-        className="embla__viewport"
-        ref={emblaRef}
-      >
-        {console.log("chunk", productsChunks)}
+      <div className="embla__viewport" ref={emblaRef}>
         <div className="embla__container">
           {productsChunks.map((productChunk, chunkindex) => {
             return (
@@ -88,12 +83,8 @@ export default function Slider({
           })}
         </div>
 
-        {true && (
-          <PrevButton onClick={scrollPrev} enabled={prevBtnEnabled} />
-        )}
-        {true && (
-          <NextButton onClick={scrollNext} enabled={nextBtnEnabled} />
-        )}
+        {true && <PrevButton onClick={scrollPrev} enabled={prevBtnEnabled} />}
+        {true && <NextButton onClick={scrollNext} enabled={nextBtnEnabled} />}
       </div>
       <div className="embla__dots">
         {scrollSnaps.map((_, index) => {

@@ -34,6 +34,7 @@ export default function QuantityPicker({
       <ButtonPlus onClick={decrement}>-</ButtonPlus>
       <NumberOfItems>{numberOfitems}</NumberOfItems>
       <ButtonMinus onClick={increment}>+</ButtonMinus>
+      
     </Container>
   );
 }
