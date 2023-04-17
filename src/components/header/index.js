@@ -24,17 +24,20 @@ export default function Header({ companyInfo }) {
     const items = [
       {
         id: "contact",
-        name: "Contact",
+        name: "Contacto",
         link: "#",
       },
       {
-        id: "we",
+        id: "us",
         name: " ¿Quienes Somos?",
         link: "#",
       },
     ];
 
-    if (!!companyInfo?.configurations?.instagramUrl) {
+    if (
+      !!companyInfo?.company?.configurations?.generalInformation?.links?.instagram &&
+      companyInfo.company.configurations.generalInformation.links.instagram.includes("instagram")
+    ) {
       items.push({
         id: "social",
         name: "Redes Sociales",
@@ -49,7 +52,7 @@ export default function Header({ companyInfo }) {
       });
     }
     return items;
-  }, [companyInfo?.configurations?.instagramUrl]);
+  }, [companyInfo]);
 
   return (
     <header

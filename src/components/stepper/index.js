@@ -11,14 +11,14 @@ export default function Stepper({ step }) {
       />
       <Step
         number={2}
-        title={"Datos de envío"}
-        description={"Datos de envío"}
+        title={"Pago"}
+        description={"Pago"}
         selected={step === 2}
       />
       <Step
         number={3}
-        title={"Forma de pago"}
-        description={"Forma de pago"}
+        title={"Resumen de compra"}
+        description={"Resumen de compra"}
         selected={step === 3}
       />
     </ul>

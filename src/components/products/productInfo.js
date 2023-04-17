@@ -1,7 +1,12 @@
+import { calculateMethodPrice } from "@/helpers/utils";
 import { Disclosure } from "@headlessui/react";
 import { MinusIcon, PlusIcon } from "@heroicons/react/20/solid";
 
-export default function ProductInfo({ product }) {
+export default function ProductInfo({
+  product,
+  availableShippingOptions,
+  availablePaymentMethods,
+}) {
   return (
     <div className="max-w-md mb-6">
       <h2 className="mb-4 text-5xl md:text-7xl lg:text-8xl font-heading font-medium">
@@ -9,7 +14,9 @@ export default function ProductInfo({ product }) {
       </h2>
       <p className="flex items-center mb-6">
         <span className="mr-2 text-base text-gray-800 font-medium">$</span>
-        <span className="text-3xl text-gray-800 font-medium">{product.price}</span>
+        <span className="text-3xl text-gray-800 font-medium">
+          {product.price}
+        </span>
       </p>
       <p className="text-lg text-gray-400">{product.description}</p>
 
@@ -37,12 +44,27 @@ export default function ProductInfo({ product }) {
               </Disclosure.Button>
               <Disclosure.Panel className="pt-4 pb-2 text-sm text-gray-500">
                 <div className="flex flex-col">
-                  <span className="text-gray-800 font-semibold">
-                    Envío comun: <span className="font-normal">$ 160</span>
-                  </span>
-                  <span className="text-gray-800 font-semibold">
-                    Retiro gratuito en nuestras tiendas habilitadas
-                  </span>
+                  {availableShippingOptions.map((availableShipingOption) => {
+                    const {
+                      shippingOption: { name, description },
+                    } = availableShipingOption;
+                    const realCost = calculateMethodPrice(
+                      availableShipingOption,
+                      product.price
+                    );
+                    return (
+                      <div
+                        key={availableShipingOption.id}
+                        className="flex flex-col mb-4"
+                      >
+                        <span className="text-gray-800 font-semibold">
+                          {`${name}: `}
+                          <span className="font-normal">{` $ ${realCost}`}</span>
+                        </span>
+                        <span>{description}</span>
+                      </div>
+                    );
+                  })}
                 </div>
               </Disclosure.Panel>
             </>
@@ -71,12 +93,27 @@ export default function ProductInfo({ product }) {
               </Disclosure.Button>
               <Disclosure.Panel className="pt-4 pb-2 text-sm text-gray-500">
                 <div className="flex flex-col">
-                  <span className="text-gray-800 font-semibold">
-                    Envío comun: <span className="font-normal">$ 160</span>
-                  </span>
-                  <span className="text-gray-800 font-semibold">
-                    Retiro gratuito en nuestras tiendas habilitadas
-                  </span>
+                  {availablePaymentMethods.map((availablePaymentMethod) => {
+                    const {
+                      paymentMethod: { name, description },
+                    } = availablePaymentMethod;
+                    const realCost = calculateMethodPrice(
+                      availablePaymentMethod,
+                      product.price
+                    );
+                    return (
+                      <div
+                        key={availablePaymentMethod.id}
+                        className="flex flex-col mb-4"
+                      >
+                        <span className="text-gray-800 font-semibold">
+                          {`${name}: `}
+                          <span className="font-normal">{` $ ${realCost}`}</span>
+                        </span>
+                        <span>{description}</span>
+                      </div>
+                    );
+                  })}
                 </div>
               </Disclosure.Panel>
             </>

@@ -12,10 +12,9 @@ export default function Nav({
   closeModal,
 }) {
   const hasSocialLinks = useMemo(() => {
-    // const socialNavItem = NAV_ITEMS.find((item) => item.id == "social");
-    // return socialNavItem.options.some((option) => !!option.url);
-    return false;
-  }, []);
+    const socialNavItem = navItems.find((item) => item.id == "social");
+    return !!socialNavItem && socialNavItem.options.some((option) => !!option.url);
+  }, [navItems]);
 
   const categoriesTrees = companyInfo ? companyInfo.categoriesTrees : [];
   return (

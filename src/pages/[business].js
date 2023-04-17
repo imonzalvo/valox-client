@@ -88,8 +88,12 @@ export default function Index() {
       <Hero
         heading={
           <>
-            <span className="text-gray-900">Manualidades en crochet </span>
-            <HighlightedText>Hechas en casa</HighlightedText>
+            <span className="text-gray-900">
+              {homeInfo.company.configurations.title}
+            </span>
+            <HighlightedText>
+              {homeInfo.company.configurations.subtitle}
+            </HighlightedText>
           </>
         }
         description={description}

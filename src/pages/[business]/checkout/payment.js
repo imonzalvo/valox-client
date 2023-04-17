@@ -153,7 +153,7 @@ export default function MpCheckout() {
 MpCheckout.getLayout = function getLayout(page) {
   return (
     <Layout>
-      <CheckoutLayout step={3}>{page}</CheckoutLayout>
+      <CheckoutLayout step={2}>{page}</CheckoutLayout>
     </Layout>
   );
 };

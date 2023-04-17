@@ -7,6 +7,7 @@ import ImageGallery from "react-image-gallery";
 import * as api from "../../../api/products";
 import { useProduct } from "../../../hooks/useProduct";
 import { useCart } from "../../../providers/Cart";
+import { useHomeInfo } from "@/hooks/useHomeInfo";
 
 import QuantityPicker from "../../../components/products/QuantityPicker";
 import Rating from "@/components/products/rating";
@@ -29,7 +30,7 @@ const ImageContainer = styled.div`
     height: 500px;
   }
 `;
-const ImageContainers = tw.div`w-full md:w-1/2 h-120 flex-1 mb-32 mx-4`;
+const ImageContainers = tw.div`w-full md:w-1/2 h-120 flex-1 mb-12 mx-4`;
 const QuantityPickerContainer = tw.div`my-6`;
 const StyledButton = tw.button`mt-8 cursor-pointer w-full text-sm font-bold tracking-wider bg-transparent 
                               hover:bg-black text-black font-semibold 
@@ -84,6 +85,8 @@ export default function Product() {
   const width = useWidth();
 
   const { data: product, isFetching } = useProduct(id);
+  const { data: companyInfo } = useHomeInfo(business);
+
   const [selectedImage, setSelectedImage] = useState(
     product.images[0].image.url
   );
@@ -135,6 +138,10 @@ export default function Product() {
     return width < 1024 || false;
   }, [width]);
 
+  if (!companyInfo) {
+    return;
+  }
+
   return (
     <section className="max-w-6xl pt-8 pb-24 bg-blueGray-100 rounded-b-10xl overflow-hidden">
       <Head>
@@ -154,7 +161,7 @@ export default function Product() {
                 showBullets={false}
                 useBrowserFullscreen={false}
                 showPlayButton={false}
-                showNav={false}
+                showNav={isMobile}
                 showFullscreenButton={true}
                 useTranslate3D={false}
                 thumbnailPosition={isMobile ? undefined : "left"}
@@ -164,7 +171,15 @@ export default function Product() {
             </ImageContainer>
           </ImageContainers>
           <div className="w-full lg:w-1/2 px-4 mx-4">
-            <ProductInfo product={product} />
+            <ProductInfo
+              product={product}
+              availableShippingOptions={
+                companyInfo.company.configurations.availableShippingOptions
+              }
+              availablePaymentMethods={
+                companyInfo.company.configurations.availablePaymentMethods
+              }
+            />
             {/* <Rating />
             <ColorPicker /> */}
             <QuantityPickerContainer>
