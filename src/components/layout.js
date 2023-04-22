@@ -37,7 +37,7 @@ export default function Layout({ children }) {
     }
 
     return false;
-  }, [companyInfo.company.configurations.generalInformation.phone]);
+  }, [companyInfo]);
 
   return (
     <>
@@ -48,7 +48,7 @@ export default function Layout({ children }) {
           <FloatingWhatsApp
             phoneNumber={whatsAppNumber}
             statusMessage={"Disponible"}
-            accountName={process.env.REACT_APP_BUSINESS_TITLE}
+            accountName={companyInfo?.company?.configurations?.name}
             chatMessage={"Buenas! En que podemos ayudarte?"}
             placeholder={"Escriba su consulta"}
             avatar="favicon.ico"
