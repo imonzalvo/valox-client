@@ -7,21 +7,21 @@ export default function Step({ number, title, description, selected }) {
             ? `flex cursor-pointer items-center pl-2 
         leading-[1.3rem] no-underline after:ml-2 
         after:h-px after:w-full after:flex-1 after:bg-secondary-300
-        after:content-['']hover:bg-gray-300 focus:outline-none`
+        after:content-['']hover:bg-gray-300 focus:outline-none tablet:after:hidden`
             : `flex cursor-pointer items-center pl-2 
         leading-[1.3rem] no-underline after:ml-2 
         after:h-px after:w-full after:flex-1 after:bg-gray-300
-        after:content-['']hover:bg-gray-300 focus:outline-none`
+        after:content-['']hover:bg-gray-300 focus:outline-none tablet:after:hidden`
         }
       >
         <span
           style={selected ? { fontWeight: "bold" } : {}}
           className={
             selected
-              ? `my-6 mr-2 flex h-[1.938rem] w-[1.938rem] 
+              ? `my-6 mr-2 flex h-[1.938rem] w-[1.938rem] min-w-[30px] min-h-[30px]
           items-center justify-center rounded-full bg-secondary-400
           text-sm font-medium text-gray-800`
-              : `my-6 mr-2 flex h-[1.938rem] w-[1.938rem] 
+              : `my-6 mr-2 flex h-[1.938rem] w-[1.938rem]  min-w-[30px] min-h-[30px]
           items-center justify-center rounded-full bg-gray-400
           text-sm font-medium text-gray-800`
           }
@@ -30,7 +30,8 @@ export default function Step({ number, title, description, selected }) {
         </span>
         <span
           style={selected ? { fontWeight: "bold" } : {}}
-          className="font-medium text-neutral-500 after:flex after:text-[0.8rem] after:content-[data-content] dark:text-neutral-300"
+          className="text-sm font-medium text-neutral-500 
+          after:text-[11px] after:content-[data-content] dark:text-neutral-300"
         >
           {title}
         </span>

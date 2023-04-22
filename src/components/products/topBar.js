@@ -1,4 +1,4 @@
-export default function Topbar({productTitle}) {
+export default function Topbar({ business, productTitle }) {
   return (
     <div className="w-full px-4">
       <ul className="flex flex-wrap items-center mb-8">
@@ -7,7 +7,7 @@ export default function Topbar({productTitle}) {
             className="flex items-center text-sm font-medium text-gray-500 hover:text-gray-500"
             href="#"
           >
-            <span>{process.env.NEXT_PUBLIC_BUSINESS_TITLE}</span>
+            <span>{business}</span>
             <svg
               className="ml-6"
               width="4"

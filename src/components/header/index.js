@@ -35,8 +35,11 @@ export default function Header({ companyInfo }) {
     ];
 
     if (
-      !!companyInfo?.company?.configurations?.generalInformation?.links?.instagram &&
-      companyInfo.company.configurations.generalInformation.links.instagram.includes("instagram")
+      !!companyInfo?.company?.configurations?.generalInformation?.links
+        ?.instagram &&
+      companyInfo.company.configurations.generalInformation.links.instagram.includes(
+        "instagram"
+      )
     ) {
       items.push({
         id: "social",
@@ -71,7 +74,7 @@ export default function Header({ companyInfo }) {
                   href={getBusinessHome(business)}
                   className="text-lg font-semibold tracking-widest text-secondary-700 uppercase rounded-lg dark-mode:text-white focus:outline-none outline:none"
                 >
-                  {process.env.NEXT_PUBLIC_BUSINESS_TITLE}
+                  {companyInfo.company.name}
                 </Link>
                 <div className="flex flex-row items-center md:hidden">
                   <div className="w-[44px] h-[40px] block">

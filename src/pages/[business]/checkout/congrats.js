@@ -11,6 +11,8 @@ import OrderSummary from "@/components/orderSummary";
 import CheckoutSummary from "@/components/checkoutSummary";
 import Layout from "@/components/layout";
 import CheckoutLayout from "@/components/checkoutLayout";
+import { getHomeInfo } from "@/api/homeInfo";
+import { useHomeInfo } from "@/hooks/useHomeInfo";
 
 const OuterContainer = tw.div`mt-8 flex justify-between flex-1 max-w-screen-xl
 sm:flex-col md:flex-col lg:flex-col xl:flex-col 2xl:flex-col tablet:flex-col tablet:items-center items-center
@@ -30,13 +32,15 @@ const RightContainer = tw(
 )`tablet:mt-8 justify-end justify-center tablet:w-full`;
 
 export const getServerSideProps = async (ctx) => {
-  const { orderId } = ctx.query;
+  const { business, orderId } = ctx.query;
 
   const queryClient = new QueryClient();
 
   await queryClient.fetchQuery(["order", ctx.query], () =>
     api.getOrderById(orderId)
   );
+
+  await queryClient.fetchQuery(["homeInfo"], () => getHomeInfo(business));
 
   return {
     props: {
@@ -46,21 +50,28 @@ export const getServerSideProps = async (ctx) => {
 };
 
 export default function OrderCongrats() {
-  const PUBLIC_KEY = process.env.NEXT_PUBLIC_MERCADO_PAGO_PUBLIC_KEY;
-
   const {
-    query: { orderId },
+    query: { business, orderId },
     isReady,
   } = useRouter();
 
   const { data, isFetching } = useOrder(orderId);
+  const { data: homeInfo } = useHomeInfo(business);
+
   const [mercadopago, setMercadopago] = useState(null);
 
   if (!data) {
     return;
   }
 
+  const PUBLIC_KEY =
+    homeInfo?.company?.configurations?.mercadoPagoPublicKey;
+
   const setUp = () => {
+    if (!PUBLIC_KEY) {
+      return;
+    }
+
     const mercadopagoAux = new window.MercadoPago(PUBLIC_KEY, {
       locale: "es-UY",
     });
@@ -108,7 +119,7 @@ export default function OrderCongrats() {
         )}
         <Container>
           <LeftContainer>
-            <OrderSummary order={data} />
+            <OrderSummary order={data} bankAccount={homeInfo?.company?.configurations?.bankAccount}/>
           </LeftContainer>
           <RightContainer>
             {/* <CartSummary

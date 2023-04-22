@@ -42,7 +42,7 @@ export default function CheckoutSummary({ products, details }) {
               {subPriceRow("Envío", details.shippingOption.cost)}
               {subPriceRow(
                 "Costo por metodo de pago",
-                details.shippingOption.cost
+                details.paymentMethod.cost
               )}
             </div>
             <div className="mt-6 flex items-center justify-between">

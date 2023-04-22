@@ -14,11 +14,11 @@ import Head from "next/head";
 import ProductList from "../../../components/shop/productList";
 
 export const getServerSideProps = async () => {
+  const { business } = ctx.query;
+
   const queryClient = new QueryClient();
 
-  await queryClient.fetchQuery(["homeInfo"], () =>
-    api.getHomeInfo(process.env.NEXT_PUBLIC_BUSINESS_HANDLE)
-  );
+  await queryClient.fetchQuery(["homeInfo"], () => api.getHomeInfo(business));
 
   return {
     props: {
@@ -77,7 +77,7 @@ export default function Shop() {
   return (
     <div className="bg-white w-full max-w-6xl">
       <Head>
-        <title>{`${process.env.NEXT_PUBLIC_BUSINESS_TITLE} | Tienda`}</title>
+        <title>{`${homeInfo.company.name} | Tienda`}</title>
         <meta name="description" content={description} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />

@@ -5,24 +5,28 @@ import Script from "next/script";
 import { useRouter } from "next/router";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 
-import * as api from "../../../api/orders";
+import * as ordersApi from "../../../api/orders";
+import { getHomeInfo } from "@/api/homeInfo";
+
 import { useOrder } from "@/hooks/useOrder";
 import Loader from "@/components/common/Loader";
 import Layout from "@/components/layout";
 import CheckoutLayout from "@/components/checkoutLayout";
 import { getCongratsUrl } from "@/helpers/routedHelper";
+import { useHomeInfo } from "@/hooks/useHomeInfo";
 
-const Container = tw.div`flex justify-center px-10 flex-1 mt-4 md:flex-row lg:flex-row xl:flex-row 2xl:flex-row small:flex-col-reverse small:items-center`;
+const Container = tw.div`flex justify-center px-2 flex-1 mt-4 md:flex-row lg:flex-row xl:flex-row 2xl:flex-row small:flex-col-reverse small:items-center`;
 const HalfContaier = tw.div`flex small:w-full flex-1 justify-center`;
 
 export const getServerSideProps = async (ctx) => {
-  const { orderId } = ctx.query;
+  const { orderId, business } = ctx.query;
 
   const queryClient = new QueryClient();
 
   await queryClient.fetchQuery(["order", ctx.query], () =>
-    api.getOrderById(orderId)
+  ordersApi.getOrderById(orderId)
   );
+  await queryClient.fetchQuery(["homeInfo"], () => getHomeInfo(business));
 
   return {
     props: {
@@ -32,8 +36,6 @@ export const getServerSideProps = async (ctx) => {
 };
 
 export default function MpCheckout() {
-  const PUBLIC_KEY = process.env.NEXT_PUBLIC_MERCADO_PAGO_PUBLIC_KEY;
-
   const {
     push,
     query: { business, orderId },
@@ -44,6 +46,10 @@ export default function MpCheckout() {
 
   const [mercadopago, setMercadopago] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { data: homeInfo } = useHomeInfo(business);
+
+  const MERCADOPAGO_PUBLIC_KEY = homeInfo?.company?.configurations?.mercadoPagoPublicKey;
+
 
   if (isFetching || isLoading) {
     return <Loader isLoading={true} />;
@@ -74,7 +80,7 @@ export default function MpCheckout() {
     new Promise((resolve, reject) => {
       axios
         .post(
-          `${process.env.NEXT_PUBLIC_API_URL}/process_payment/${process.env.NEXT_PUBLIC_BUSINESS_HANDLE}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/process_payment/${homeInfo.company.handle}`,
           buildTransaction(cardFormData)
         )
         .then((res) => {
@@ -88,7 +94,10 @@ export default function MpCheckout() {
     });
 
   const setUp = () => {
-    const mercadopagoAux = new window.MercadoPago(PUBLIC_KEY, {
+    if(!MERCADOPAGO_PUBLIC_KEY) {
+      return;
+    }
+    const mercadopagoAux = new window.MercadoPago(MERCADOPAGO_PUBLIC_KEY, {
       locale: "es-UY",
     });
     const settings = {

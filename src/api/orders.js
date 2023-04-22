@@ -7,7 +7,7 @@ const mapProducts = (products) => {
       quantity: product.quantity,
       price: product.unitPrice,
       title: product.title,
-      image: product.product?.images[0]?.image.sizes?.thumbnail.url
+      image: product.product?.images[0]?.image.sizes?.thumbnail.url,
     };
   });
 };
@@ -40,11 +40,12 @@ export const getOrderById = async (id) => {
     },
     payment: data.payment,
     products: mapProducts(data.products),
-    status: data.status
+    status: data.status,
   };
 };
 
-export const createOrder = async (data) => {
+export const createOrder = async ( data) => {
+  console.log("hola?", data)
   const products = data.products.map((product) => {
     return {
       id: product.id,
@@ -66,7 +67,7 @@ export const createOrder = async (data) => {
   };
 
   const response = await axios.post(
-    `${process.env.NEXT_PUBLIC_API_URL}/create_order/${process.env.NEXT_PUBLIC_BUSINESS_HANDLE}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/create_order/${data.businessHandle}`,
     request
   );
 

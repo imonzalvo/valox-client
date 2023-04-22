@@ -63,18 +63,6 @@ export default function App({ Component, pageProps }) {
           ) : (
             <Layout>{renderComponent()}</Layout>
           )}
-          {!!whatsAppNumber && (
-            <div style={{ position: "absolute" }}>
-              <FloatingWhatsApp
-                phoneNumber={whatsAppNumber}
-                statusMessage={"Disponible"}
-                accountName={process.env.REACT_APP_BUSINESS_TITLE}
-                chatMessage={"Buenas! En que podemos ayudarte?"}
-                placeholder={"Escriba su consulta"}
-                avatar="favicon.ico"
-              />
-            </div>
-          )}
         </Hydrate>
       </QueryClientProvider>
     </CartProvider>

@@ -18,7 +18,7 @@ export default function ProductInfo({
           {product.price}
         </span>
       </p>
-      <p className="text-lg text-gray-400">{product.description}</p>
+      <p className="text-lg text-gray-600">{product.description}</p>
 
       <div className="mt-8">
         <h4 className="font-heading font-normal">Mas Información</h4>

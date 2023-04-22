@@ -3,7 +3,7 @@ import tw from "twin.macro";
 import { useRouter } from "next/router";
 
 import { useForm } from "react-hook-form";
-import { useMutation } from "@tanstack/react-query";
+import { QueryClient, useMutation, dehydrate } from "@tanstack/react-query";
 
 import * as api from "../../../api/orders";
 import { useCheckoutInfo } from "@/hooks/useCheckoutInfo";
@@ -14,9 +14,10 @@ import Loader from "@/components/common/Loader";
 import Layout from "@/components/layout";
 import CheckoutLayout from "@/components/checkoutLayout";
 import { calculateMethodPrice } from "@/helpers/utils";
-import { getCongratsUrl } from "@/helpers/routedHelper";
+import { getCongratsUrl, getPaymentsUrl } from "@/helpers/routedHelper";
+import { getHomeInfo } from "@/api/homeInfo";
 
-const Container = tw.div`flex mt-12 justify-between flex-1 font-sans max-w-screen-xl px-2
+const Container = tw.div`flex mt-4 justify-between flex-1 font-sans max-w-screen-xl px-2
 sm:flex-col md:flex-col lg:flex-row xl:flex-row 2xl:flex-row tablet:flex-col tablet:items-center
 tablet:mb-12
 `;
@@ -28,6 +29,20 @@ const RightContainer = tw(
 )`tablet:mt-8 justify-end justify-center tablet:w-full`;
 
 const FormTitle = tw.h1`font-bold`;
+
+export const getServerSideProps = async (ctx) => {
+  const { business } = ctx.query;
+
+  const queryClient = new QueryClient();
+
+  await queryClient.fetchQuery(["homeInfo"], () => getHomeInfo(business));
+
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+  };
+};
 
 export default function OrderInfo() {
   const {
@@ -85,6 +100,7 @@ export default function OrderInfo() {
         shippingOption: selectedShippingOption,
         paymentMethod: selectedPaymentMethod,
         products: checkoutInfo.products,
+        businessHandle: business,
       });
     } else {
       scrollToBottom();

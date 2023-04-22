@@ -5,6 +5,7 @@ import { dehydrate, QueryClient } from "@tanstack/react-query";
 import ImageGallery from "react-image-gallery";
 
 import * as api from "../../../api/products";
+import { getHomeInfo } from "@/api/homeInfo";
 import { useProduct } from "../../../hooks/useProduct";
 import { useCart } from "../../../providers/Cart";
 import { useHomeInfo } from "@/hooks/useHomeInfo";
@@ -39,11 +40,12 @@ const StyledButton = tw.button`mt-8 cursor-pointer w-full text-sm font-bold trac
 const AddToCart = tw.div`text-base text-black font-semibold flex flex-row cursor-pointer underline`;
 
 export const getServerSideProps = async (ctx) => {
-  const { id } = ctx.query;
+  const { business, id } = ctx.query;
 
   const queryClient = new QueryClient();
 
   await queryClient.fetchQuery(["product", id], () => api.getProductById(id));
+  await queryClient.fetchQuery(["homeInfo"], () => getHomeInfo(business));
 
   return {
     props: {
@@ -138,14 +140,10 @@ export default function Product() {
     return width < 1024 || false;
   }, [width]);
 
-  if (!companyInfo) {
-    return;
-  }
-
   return (
-    <section className="max-w-6xl pt-8 pb-24 bg-blueGray-100 rounded-b-10xl overflow-hidden">
+    <section className="max-w-6xl w-full pt-8 pb-24 bg-blueGray-100 rounded-b-10xl overflow-hidden">
       <Head>
-        <title>{`${process.env.NEXT_PUBLIC_BUSINESS_TITLE} | ${product.title}`}</title>
+        <title>{`${companyInfo.company.name} | ${product.title}`}</title>
         <meta name="description" content={product.description} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
@@ -153,7 +151,10 @@ export default function Product() {
       <div className="container px-4 mx-auto">
         {/* // TODO: Flex wrap working badly */}
         <div className="flex flex-wrap -mx-4">
-          <Topbar productTitle={product.title} />
+          <Topbar
+            business={companyInfo.company.name}
+            productTitle={product.title}
+          />
           <ImageContainers>
             <ImageContainer>
               <ImageGallery
