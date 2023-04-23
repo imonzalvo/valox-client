@@ -13,7 +13,7 @@ import Loader from "@/components/common/Loader";
 import Head from "next/head";
 import ProductList from "../../../components/shop/productList";
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async (ctx) => {
   const { business } = ctx.query;
 
   const queryClient = new QueryClient();
