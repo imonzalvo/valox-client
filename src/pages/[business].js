@@ -79,11 +79,15 @@ export default function Index() {
     >
       <Head>
         <title>{homeInfo.company.name}</title>
-        <meta name="og.title" content={homeInfo.company.name} />
-        <meta name="og.description" content={description} />
+        <meta name="title" content={homeInfo.company.name} />
         <meta name="description" content={description} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={homeInfo.company.name} />
+        <meta property="og:description" content={description} />
+        <meta property="og:image" content={landingImageUrl} />
       </Head>
       <Hero
         heading={
