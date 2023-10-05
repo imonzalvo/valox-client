@@ -10,6 +10,7 @@ import Hero from "@/components/Hero";
 import Slider from "@/components/slider";
 import { useWidth } from "@/hooks/helpers/useWidth";
 import { useRouter } from "next/router";
+import { useBusinessName } from "@/hooks/helpers/useBusinessName";
 
 const SectionHeading = tw.h2`text-start text-4xl sm:text-5xl font-black tracking-wide text-center xsmall:max-w-[375px]`;
 const Header = tw(SectionHeading)``;
@@ -35,8 +36,11 @@ export default function Index() {
   const {
     query: { business },
   } = useRouter();
+
+
+  const businessName = useBusinessName();
   const width = useWidth();
-  const { data: homeInfo } = useHomeInfo(business);
+  const { data: homeInfo } = useHomeInfo(businessName);
 
   const sliderProductsChunkAmount = useMemo(() => {
     if (width < 524) {
