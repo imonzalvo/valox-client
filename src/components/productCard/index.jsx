@@ -8,9 +8,17 @@ export default function ProductCard({ product, fullWidthProduct, styles }) {
   const {
     query: { business },
   } = useRouter();
+  
   const thumbnailImageUrl = useMemo(() => {
-    const firstImage = product.images[0].image;
-    const thumbnailImageUrl = firstImage.sizes["thumbnail"].url;
+    console.log("product", product, product.images[0])
+    let thumbnailImageUrl;
+    if(!!product.images.length) {
+      const firstImage = product.images[0].image;
+      thumbnailImageUrl = firstImage.sizes["thumbnail"].url;
+    } else {
+      thumbnailImageUrl = "/media/wh7ww-default-product-image-400x300.webp";
+    }
+    
     return thumbnailImageUrl.includes("localhost")
       ? `${thumbnailImageUrl}`
       : `${process.env.NEXT_PUBLIC_API_URL}${thumbnailImageUrl}`;
