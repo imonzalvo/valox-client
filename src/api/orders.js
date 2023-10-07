@@ -1,3 +1,4 @@
+import { getProductDefaultImages } from "@/helpers/utils";
 import axios from "axios";
 
 const mapProducts = (products) => {
@@ -7,10 +8,18 @@ const mapProducts = (products) => {
       quantity: product.quantity,
       price: product.unitPrice,
       title: product.title,
-      image: product.product?.images[0]?.image.sizes?.thumbnail.url,
+      image: getProductThumbnailImage(product),
     };
   });
 };
+
+const getProductThumbnailImage = (product) => {
+  if(product.product?.images.length) {
+    return product.product?.images[0]?.image.sizes?.thumbnail.url;
+  }
+
+  return getProductDefaultImages()[0].image.sizes.thumbnail.url;
+}
 
 export const getOrderById = async (id) => {
   const { data } = await axios({
