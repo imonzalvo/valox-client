@@ -1,3 +1,4 @@
+import { getProductDefaultImages } from "@/helpers/utils";
 import axios from "axios";
 
 export const getProductById = async (id) => {
@@ -9,6 +10,10 @@ export const getProductById = async (id) => {
     method: "get",
     url: `${process.env.NEXT_PUBLIC_API_URL}/api/products/${id}`,
   });
+
+  if(!data.images.length) {
+    data["images"] = getProductDefaultImages()
+  }
 
   return data;
 };

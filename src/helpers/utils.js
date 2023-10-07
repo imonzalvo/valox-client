@@ -15,3 +15,30 @@ export const calculateMethodPrice = (method, productsAmount) => {
       return method.cost;
   }
 };
+
+export const getProductDefaultImages = () => {
+  const thumbnail = "/media/wh7ww-default-product-image-400x300.webp";
+  const card = "/media/szm54-default-product-image-768x1024.webp";
+  const tablet = "/media/fhkdb-default-product-image-1024x1024.webp";
+  const original = "/media/frbf4-default-product-image.webp";
+
+  const image = {
+    url: original,
+    sizes: {
+      thumbnail: {
+        url: thumbnail,
+      },
+      card: {
+        url: card,
+      },
+      tablet: {
+        url: tablet,
+      },
+      original: {
+        url: original,
+      },
+    },
+  };
+
+  return [{ image }];
+};
