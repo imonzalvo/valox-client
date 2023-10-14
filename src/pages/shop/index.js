@@ -14,8 +14,9 @@ import Head from "next/head";
 import ProductList from "../../../components/shop/productList";
 
 export const getServerSideProps = async (ctx) => {
-  const { business } = ctx.query;
-
+  const host  = ctx.req.headers.host;
+  const business = getBusinessFromtHost(host);
+  
   const queryClient = new QueryClient();
 
   await queryClient.fetchQuery(["homeInfo"], () => api.getHomeInfo(business));

@@ -11,6 +11,7 @@ import Slider from "@/components/slider";
 import { useWidth } from "@/hooks/helpers/useWidth";
 import { useRouter } from "next/router";
 import { useBusinessName } from "@/hooks/helpers/useBusinessName";
+import { getBusinessFromtHost } from "@/helpers/utils";
 
 const SectionHeading = tw.h2`text-start text-4xl sm:text-5xl font-black tracking-wide text-center xsmall:max-w-[375px]`;
 const Header = tw(SectionHeading)``;
@@ -19,7 +20,9 @@ const HighlightedText = tw.div`bg-primary-500 text-gray-100 px-4 inline-block`;
 const StyledDiv = tw.div`pt-8 max-w-6xl w-full font-display min-h-screen text-secondary-500 overflow-hidden flex flex-col items-center`;
 
 export const getServerSideProps = async (ctx) => {
-  const { business } = ctx.query;
+
+  const host  = ctx.req.headers.host;
+  const business = getBusinessFromtHost(host);
 
   const queryClient = new QueryClient();
 
@@ -33,14 +36,10 @@ export const getServerSideProps = async (ctx) => {
 };
 
 export default function Index() {
-  const {
-    query: { business },
-  } = useRouter();
-
-
-  const businessName = useBusinessName();
+  const business = useBusinessName();
   const width = useWidth();
-  const { data: homeInfo } = useHomeInfo(businessName);
+  const { data: homeInfo } = useHomeInfo(business);
+  console.log("hola index")
 
   const sliderProductsChunkAmount = useMemo(() => {
     if (width < 524) {

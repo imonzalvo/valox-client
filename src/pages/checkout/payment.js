@@ -5,7 +5,7 @@ import Script from "next/script";
 import { useRouter } from "next/router";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 
-import * as ordersApi from "../../../api/orders";
+import * as ordersApi from "../../api/orders";
 import { getHomeInfo } from "@/api/homeInfo";
 
 import { useOrder } from "@/hooks/useOrder";
@@ -19,8 +19,9 @@ const Container = tw.div`flex justify-center px-2 flex-1 mt-4 md:flex-row lg:fle
 const HalfContaier = tw.div`flex small:w-full flex-1 justify-center`;
 
 export const getServerSideProps = async (ctx) => {
-  const { orderId, business } = ctx.query;
-
+  const { orderId } = ctx.query;
+  const host  = ctx.req.headers.host;
+  const business = getBusinessFromtHost(host);
   const queryClient = new QueryClient();
 
   await queryClient.fetchQuery(["order", ctx.query], () =>

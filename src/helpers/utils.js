@@ -42,3 +42,13 @@ export const getProductDefaultImages = () => {
 
   return [{ image }];
 };
+
+export const getBusinessFromtHost = (host) => {
+  if (host.includes("mitienda")) {
+    console.log("returning", host.split(".")[0]);
+    return host.split(".")[0];
+  }
+
+  console.log("returning else");
+  return "celia";
+};

@@ -5,11 +5,11 @@ import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { QueryClient, useMutation, dehydrate } from "@tanstack/react-query";
 
-import * as api from "../../../api/orders";
+import * as api from "../../api/orders";
 import { useCheckoutInfo } from "@/hooks/useCheckoutInfo";
 
-import CartSummary from "../../../components/checkout/cartSummary/index";
-import UserDataForm from "../../../components/checkout/UserDataForm";
+import CartSummary from "../../components/checkout/cartSummary/index";
+import UserDataForm from "../../components/checkout/UserDataForm";
 import Loader from "@/components/common/Loader";
 import Layout from "@/components/layout";
 import CheckoutLayout from "@/components/checkoutLayout";

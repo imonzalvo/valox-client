@@ -40,8 +40,10 @@ const StyledButton = tw.button`mt-8 cursor-pointer w-full text-sm font-bold trac
 const AddToCart = tw.div`text-base text-black font-semibold flex flex-row cursor-pointer underline`;
 
 export const getServerSideProps = async (ctx) => {
-  const { business, id } = ctx.query;
-
+  const { id } = ctx.query;
+  const host  = ctx.req.headers.host;
+  const business = getBusinessFromtHost(host);
+  
   const queryClient = new QueryClient();
 
   await queryClient.fetchQuery(["product", id], () => api.getProductById(id));

@@ -6,13 +6,14 @@ import { dehydrate, QueryClient } from "@tanstack/react-query";
 
 // import CartSummary from "../../components/checkout/cartSummary/index";
 import { useOrder } from "@/hooks/useOrder";
-import * as api from "../../../api/orders";
+import * as api from "../../api/orders";
 import OrderSummary from "@/components/orderSummary";
 import CheckoutSummary from "@/components/checkoutSummary";
 import Layout from "@/components/layout";
 import CheckoutLayout from "@/components/checkoutLayout";
 import { getHomeInfo } from "@/api/homeInfo";
 import { useHomeInfo } from "@/hooks/useHomeInfo";
+import { getBusinessFromtHost } from "@/helpers/utils";
 
 const OuterContainer = tw.div`mt-8 flex justify-between flex-1 max-w-screen-xl
 sm:flex-col md:flex-col lg:flex-col xl:flex-col 2xl:flex-col tablet:flex-col tablet:items-center items-center
@@ -32,7 +33,9 @@ const RightContainer = tw(
 )`tablet:mt-8 justify-end justify-center tablet:w-full`;
 
 export const getServerSideProps = async (ctx) => {
-  const { business, orderId } = ctx.query;
+  const { orderId } = ctx.query;
+  const host  = ctx.req.headers.host;
+  const business = getBusinessFromtHost(host);
 
   const queryClient = new QueryClient();
 
